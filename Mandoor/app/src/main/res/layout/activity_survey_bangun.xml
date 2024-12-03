@@ -13,23 +13,54 @@
         android:layout_height="wrap_content">
 
         <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
+            android:id="@+id/toolbarsurveybangun"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:layout_marginTop="0dp"
-            android:background="@color/gray"
+            android:background="@color/light_gray"
             android:elevation="4dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:navigationIcon="@drawable/back"
-            app:title="Survey Renovasi"
+            app:title="@string/survey_bangun"
             app:titleMarginStart="80dp"
             app:titleTextColor="@android:color/black" />
 
         <TextView
-            android:id="@+id/title_text"
+            android:id="@+id/rating"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="@string/rate"
+            android:textColor="#000000"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.093"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/toolbarsurveybangun" />
+
+        <EditText
+            android:id="@+id/ed_rating"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="32dp"
+            android:background="@drawable/rounded_edittext"
+            android:hint="@string/hintraterenov"
+            android:padding="16dp"
+            android:textColor="#000000"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/rating" />
+
+        <TextView
+            android:id="@+id/jenis"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
@@ -40,7 +71,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.09"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+            app:layout_constraintTop_toBottomOf="@+id/ed_rating" />
 
         <EditText
             android:id="@+id/ed_jenisrenov"
@@ -50,14 +81,14 @@
             android:layout_marginTop="16dp"
             android:layout_marginEnd="32dp"
             android:background="@drawable/rounded_edittext"
-            android:hint="@string/hintjenisrenov"
+            android:hint="@string/hintjenisbangun"
             android:padding="16dp"
             android:textColor="#000000"
             android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/title_text" />
+            app:layout_constraintTop_toBottomOf="@+id/jenis" />
 
         <TextView
             android:id="@+id/rangerenov"
@@ -143,7 +174,7 @@
             android:layout_marginTop="16dp"
             android:layout_marginEnd="32dp"
             android:background="@drawable/rounded_edittext"
-            android:hint="@string/hintrange"
+            android:hint="@string/alamat_pengerjaan"
             android:padding="16dp"
             android:textColor="#000000"
             android:textSize="16sp"
@@ -222,7 +253,7 @@
                 android:layout_height="58dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginBottom="16dp"
-                android:backgroundTint="@color/white"
+                android:backgroundTint="@color/gray"
                 android:drawableLeft="@drawable/image"
                 android:text="@string/Gallery"
                 android:textColor="@color/black"
@@ -238,7 +269,7 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginBottom="16dp"
-                android:backgroundTint="@color/white"
+                android:backgroundTint="@color/gray"
                 android:drawableLeft="@drawable/camera"
                 android:text="@string/camera"
                 android:textColor="@color/black"
@@ -249,6 +280,7 @@
         </LinearLayout>
 
         <Button
+            android:id="@+id/btnSimpan"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="32dp"

@@ -3,6 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES"/>
+    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -24,10 +27,12 @@
             android:name=".ui.Bangun.recommend.RecommendActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.survey.SurveyBangunActivity"
+            android:name=".ui.Bangun.survey.SurveyBangunActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:exported="false" />
         <activity
-            android:name=".ui.survey.SurveyRenovActivity"
+            android:name=".ui.Bangun.survey.SurveyRenovActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:exported="false" />
         <activity
             android:name=".ui.onboarding.OnBoardingActivity"

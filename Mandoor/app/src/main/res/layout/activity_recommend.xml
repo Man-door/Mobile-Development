@@ -6,15 +6,15 @@
     android:background="@color/primary_background">
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
+        android:id="@+id/toolbarrecommend"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:layout_marginTop="0dp"
-        android:background="@color/gray"
+        android:background="@color/light_gray"
         android:elevation="4dp"
+        app:layout_constraintTop_toTopOf="parent"
         app:navigationIcon="@drawable/back"
         app:title="@string/pilihmandor"
-        app:titleMarginStart="80dp"
+        app:titleMarginStart="100dp"
         app:titleTextColor="@android:color/black" />
 
     <LinearLayout
@@ -30,7 +30,7 @@
         android:padding="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/toolbar" Of="parent">
+        app:layout_constraintTop_toBottomOf="@id/toolbarrecommend">
 
 
         <androidx.constraintlayout.widget.ConstraintLayout

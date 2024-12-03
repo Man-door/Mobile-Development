@@ -12,13 +12,13 @@
         tools:layout="@layout/fragment_home" />
 
     <fragment
-        android:id="@+id/navigation_dashboard"
+        android:id="@+id/navigation_bangun"
         android:name="com.dicoding.mandoor.ui.Bangun.BangunFragment"
-        android:label="@string/title_dashboard"
+        android:label="@string/title_bangun"
         tools:layout="@layout/fragment_bangun" />
 
     <fragment
-        android:id="@+id/navigation_notifications"
+        android:id="@+id/navigation_account"
         android:name="com.dicoding.mandoor.ui.notifications.NotificationsFragment"
         android:label="@string/title_notifications"
         tools:layout="@layout/fragment_notifications" />

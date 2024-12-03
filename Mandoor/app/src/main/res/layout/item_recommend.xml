@@ -68,21 +68,31 @@
             tools:text="@string/rating" />
 
         <TextView
-            android:id="@+id/bidangmandor"
-            android:layout_width="0dp"
+            android:id="@+id/totalproyek"
+            android:layout_width="86dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:ellipsize="end"
-            android:maxLines="3"
+            android:layout_marginTop="8dp"
+            android:textColor="@color/black"
             android:textSize="14sp"
-            android:textColor="@color/gray"
             card_view:layout_constraintEnd_toEndOf="parent"
+            card_view:layout_constraintHorizontal_bias="0.0"
             card_view:layout_constraintStart_toStartOf="parent"
             card_view:layout_constraintTop_toBottomOf="@+id/mandorname"
-            tools:text="@string/bidang" />
+            tools:text="@string/total_proyek" />
 
         <TextView
-            android:id="@+id/tahunmandor"
+            android:id="@+id/numproyek"
+            android:layout_width="24dp"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            android:text="@string/num_proyek"
+            card_view:layout_constraintBottom_toBottomOf="@+id/totalproyek"
+            card_view:layout_constraintStart_toEndOf="@+id/totalproyek"
+            card_view:layout_constraintTop_toTopOf="@+id/totalproyek" />
+
+        <TextView
+            android:id="@+id/jangkauanmandor"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
@@ -92,22 +102,8 @@
             android:textSize="14sp"
             card_view:layout_constraintEnd_toEndOf="parent"
             card_view:layout_constraintStart_toStartOf="parent"
-            card_view:layout_constraintTop_toBottomOf="@+id/bidangmandor"
-            tools:text="@string/tahun"/>
-
-        <TextView
-            android:id="@+id/jarakmandor"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:ellipsize="end"
-            android:maxLines="3"
-            android:textColor="@color/black"
-            android:textSize="14sp"
-            card_view:layout_constraintEnd_toEndOf="parent"
-            card_view:layout_constraintStart_toStartOf="parent"
-            card_view:layout_constraintTop_toBottomOf="@+id/tahunmandor"
-            tools:text="@string/jarak"/>
+            card_view:layout_constraintTop_toBottomOf="@+id/totalproyek"
+            tools:text="@string/jangkauan"/>
 
         <TextView
             android:id="@+id/hargamandor"
@@ -117,11 +113,11 @@
             android:ellipsize="end"
             android:maxLines="3"
             android:textColor="@color/black"
-            android:textSize="24sp"
+            android:textSize="12sp"
             card_view:layout_constraintEnd_toEndOf="parent"
             card_view:layout_constraintStart_toStartOf="parent"
-            card_view:layout_constraintTop_toBottomOf="@+id/jarakmandor"
-            tools:text="@string/hargamandor"/>
+            card_view:layout_constraintTop_toBottomOf="@+id/jangkauanmandor"
+            tools:text="@string/descmandor"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

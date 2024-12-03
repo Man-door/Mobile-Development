@@ -49,12 +49,19 @@
     <string name="rating">4.5</string>
     <string name="recommendmandor">Rekomendasi Mandor</string>
     <string name="customer_description">Deskripsi: Renovasi rumah baru, membutuhkan mandor yang berpengalaman.</string>
-    <string name="bidang">Rumah Elite</string>
-    <string name="tahun">5 Tahun</string>
-    <string name="jarak">3.7 KM</string>
-    <string name="hargamandor">Rp 250.000</string>
+    <string name="total_proyek">Total Proyek:</string>
+    <string name="jangkauan">Tangerang Selatan, Tangerang Kota</string>
+    <string name="descmandor">Kami menerima Jasa Kontraktor Bangunan,Jasa Pertukangan,Perbaikan Lantai,Pemasangan Lantai dan Pemasangan Atap</string>
     <string name="simpan">Simpan</string>
     <string name="listmandor">List Mandor</string>
     <string name="seeal">See all</string>
     <string name="pilihmandor">Pilih Mandor</string>
+    <string name="password_too_short">Password minimal 8 karakter</string>
+    <string name="survey_renovasi">Survey Renovasi</string>
+    <string name="rate">Rating</string>
+    <string name="hintraterenov">Pilih rating mandor sesuai budget dan kebutuhan anda</string>
+    <string name="survey_bangun">Survey Bangun</string>
+    <string name="hintjenisbangun">Pilih jenis bangunan anda</string>
+    <string name="title_bangun">Bangun</string>
+    <string name="num_proyek">5</string>
 </resources>

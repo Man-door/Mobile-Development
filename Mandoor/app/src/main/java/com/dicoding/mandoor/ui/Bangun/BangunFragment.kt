@@ -1,17 +1,24 @@
 package com.dicoding.mandoor.ui.Bangun
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.cardview.widget.CardView
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import com.dicoding.mandoor.R
 import com.dicoding.mandoor.databinding.FragmentBangunBinding
+import com.dicoding.mandoor.ui.Bangun.survey.SurveyBangunActivity
+import com.dicoding.mandoor.ui.Bangun.survey.SurveyRenovActivity
 
 class BangunFragment : Fragment() {
 
     private var _binding: FragmentBangunBinding? = null
     private val binding get() = _binding!!
+
+    private val bangunViewModel: BangunViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -20,13 +27,35 @@ class BangunFragment : Fragment() {
         _binding = FragmentBangunBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        binding.titleText.text = getString(R.string.bangun)
+        bangunViewModel.setServiceData()
 
-        binding.serviceName.text = getString(R.string.bangun)
-        binding.serviceDescription.text = getString(R.string.DeskripsiBangun)
+        bangunViewModel.serviceName.observe(viewLifecycleOwner) {
+            binding.serviceName.text = it
+        }
 
-        binding.serviceName2.text = getString(R.string.renovasi)
-        binding.serviceDescription2.text = getString(R.string.DeskripsiRenov)
+        bangunViewModel.serviceDescription.observe(viewLifecycleOwner) {
+            binding.serviceDescription.text = it
+        }
+
+        bangunViewModel.serviceName2.observe(viewLifecycleOwner) {
+            binding.serviceName2.text = it
+        }
+
+        bangunViewModel.serviceDescription2.observe(viewLifecycleOwner) {
+            binding.serviceDescription2.text = it
+        }
+
+        binding.root.findViewById<CardView>(R.id.cvbangun).setOnClickListener {
+            val intent = Intent(activity, SurveyBangunActivity::class.java)
+            intent.putExtra("service_type", "bangun")
+            startActivity(intent)
+        }
+
+        binding.root.findViewById<CardView>(R.id.cvrenov).setOnClickListener {
+            val intent = Intent(activity, SurveyRenovActivity::class.java)
+            intent.putExtra("service_type", "renovasi")
+            startActivity(intent)
+        }
 
         return root
     }
@@ -36,3 +65,4 @@ class BangunFragment : Fragment() {
         _binding = null
     }
 }
+

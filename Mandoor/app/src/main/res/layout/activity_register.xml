@@ -39,14 +39,18 @@
         android:id="@+id/full_name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:background="@drawable/rounded_edittext"
+        android:drawableStart="@drawable/account_circle"
+        android:drawablePadding="10dp"
         android:hint="@string/fullname"
-        android:background="@android:drawable/edit_text"
+        android:inputType="text"
         android:padding="10dp"
-        app:layout_constraintTop_toBottomOf="@id/title"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:paddingHorizontal="16dp"
         android:layout_marginTop="20dp"
-        android:layout_marginHorizontal="20dp" />
+        android:layout_marginHorizontal="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/title"/>
 
     <!-- Username Input -->
     <EditText
@@ -54,7 +58,10 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:hint="@string/username"
-        android:background="@android:drawable/edit_text"
+        android:inputType="text"
+        android:drawablePadding="10dp"
+        android:background="@drawable/rounded_edittext"
+        android:drawableStart="@drawable/account_circle"
         android:padding="10dp"
         app:layout_constraintTop_toBottomOf="@id/full_name"
         app:layout_constraintStart_toStartOf="parent"
@@ -63,14 +70,16 @@
         android:layout_marginHorizontal="20dp" />
 
     <!-- Email Input -->
-    <EditText
+    <com.dicoding.mandoor.utils.EmailEditText
         android:id="@+id/email"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:hint="@string/email"
         android:inputType="textEmailAddress"
-        android:background="@android:drawable/edit_text"
+        android:background="@drawable/rounded_edittext"
         android:padding="10dp"
+        android:drawableStart="@drawable/email"
+        android:drawablePadding="10dp"
         app:layout_constraintTop_toBottomOf="@id/username"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -78,34 +87,40 @@
         android:layout_marginHorizontal="20dp" />
 
     <!-- Password Input -->
-    <EditText
+    <com.dicoding.mandoor.utils.PasswordEditText
         android:id="@+id/password"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:hint="@string/password"
         android:inputType="textPassword"
-        android:background="@android:drawable/edit_text"
+        android:background="@drawable/rounded_edittext"
+        android:drawableStart="@drawable/lock"
+        android:drawablePadding="10dp"
         android:padding="10dp"
+        android:drawableEnd="@drawable/visibility_off"
         app:layout_constraintTop_toBottomOf="@id/email"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="10dp"
-        android:layout_marginHorizontal="20dp" />
+        android:layout_marginHorizontal="20dp"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:clickable="true"/>
 
     <!-- Register Button -->
     <Button
         android:id="@+id/register_button"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="16dp"
+        android:backgroundTint="@color/secondary_button_border"
         android:text="@string/register"
         android:textColor="@color/white"
-        android:backgroundTint="@color/secondary_button_border"
         android:textStyle="bold"
-        app:layout_constraintTop_toBottomOf="@id/password"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="20dp"
-        android:layout_marginHorizontal="20dp" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/password" />
 
     <!-- Google Signup -->
     <LinearLayout

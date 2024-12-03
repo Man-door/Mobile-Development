@@ -1,15 +1,20 @@
 package com.dicoding.mandoor.ui.Register
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
+import android.text.InputType
 import android.util.Log
+import android.view.MotionEvent
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
+import com.dicoding.mandoor.R
 import com.dicoding.mandoor.api.ApiConfig
 import com.dicoding.mandoor.api.RegMandorRequest
 import com.dicoding.mandoor.api.RegUserRequest
 import com.dicoding.mandoor.databinding.ActivityRegisterBinding
-import com.dicoding.mandoor.response.RegMandorResponse
 import com.dicoding.mandoor.response.RegUserResponse
 import com.dicoding.mandoor.ui.Login.LoginActivity
 import retrofit2.Call
@@ -19,19 +24,46 @@ import retrofit2.Response
 class RegisterActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityRegisterBinding
+    private val registerViewModel: RegisterViewModel by viewModels()
 
+    @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityRegisterBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Get the user type (user or mandor) passed from onboarding
-        val userType = intent.getStringExtra("USER_TYPE")  // Expecting "user" or "mandor"
+        val userType = intent.getStringExtra("USER_TYPE")
 
         binding.loginLink.setOnClickListener {
             val intent = Intent(this@RegisterActivity, LoginActivity::class.java)
             startActivity(intent)
             finish()
+        }
+
+        binding.password.setOnTouchListener { _, event ->
+            if (event.action == MotionEvent.ACTION_UP) {
+                if (event.rawX >= (binding.password.right - binding.password.compoundDrawables[2].bounds.width())) {
+                    if (binding.password.inputType == InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD) {
+                        binding.password.inputType =
+                            InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
+                        binding.password.setCompoundDrawablesWithIntrinsicBounds(
+                            R.drawable.lock, 0, R.drawable.visibility, 0
+                        )
+                    } else {
+                        binding.password.inputType =
+                            InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
+                        binding.password.setCompoundDrawablesWithIntrinsicBounds(
+                            R.drawable.lock, 0, R.drawable.visibility_off, 0
+                        )
+                    }
+                    binding.password.setSelection(binding.password.text?.length ?: 0)
+                    true
+                } else {
+                    false
+                }
+            } else {
+                false
+            }
         }
 
         binding.registerButton.setOnClickListener {
@@ -40,95 +72,33 @@ class RegisterActivity : AppCompatActivity() {
             val email = binding.email.text.toString().trim()
             val password = binding.password.text.toString().trim()
 
-            // Validate input fields
-            if (fullName.isEmpty() || username.isEmpty() || email.isEmpty() || password.isEmpty()) {
-                Toast.makeText(this, "Please fill all fields", Toast.LENGTH_SHORT).show()
+            if (userType == "mandor") {
+                registerViewModel.registerMandor(fullName, username, email, password)
             } else {
-                if (userType == "mandor") {
-                    registerMandor(fullName, username, email, password)
-                } else {
-                    registerUser(fullName, username, email, password)
-                }
+                registerViewModel.registerUser(fullName, username, email, password)
             }
         }
-    }
 
-    private fun registerUser(fullName: String, username: String, email: String, password: String) {
-        val request = RegUserRequest(fullName, username, email, password)
-
-        // Use ApiConfig.instance to call the registerUser API
-        ApiConfig.instance.registerUser(request).enqueue(object : Callback<RegUserResponse> {
-            override fun onResponse(call: Call<RegUserResponse>, response: Response<RegUserResponse>) {
-                if (response.isSuccessful) {
-                    val responseBody = response.body()
-                    Toast.makeText(
-                        this@RegisterActivity,
-                        "Registration Successful: ${responseBody?.message}",
-                        Toast.LENGTH_SHORT
-                    ).show()
-
-                    // Move to LoginActivity
-                    val intent = Intent(this@RegisterActivity, LoginActivity::class.java)
-                    startActivity(intent)
-                    finish()
-                } else {
-                    val errorBody = response.errorBody()?.string()
-                    Log.e("RegisterError", "Error: $errorBody")
-                    Toast.makeText(
-                        this@RegisterActivity,
-                        "Registration Failed: ${response.message()}",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
-            }
-
-            override fun onFailure(call: Call<RegUserResponse>, t: Throwable) {
-                Log.e("RegisterError", "Network Error: ${t.message}")
-                Toast.makeText(
-                    this@RegisterActivity,
-                    "Network Error: ${t.message}",
-                    Toast.LENGTH_SHORT
-                ).show()
+        registerViewModel.registerSuccess.observe(this, Observer { success ->
+            if (success) {
+                Toast.makeText(this, "Registration Successful", Toast.LENGTH_SHORT).show()
+                val intent = Intent(this@RegisterActivity, LoginActivity::class.java)
+                startActivity(intent)
+                finish()
             }
         })
-    }
 
-    private fun registerMandor(fullName: String, username: String, email: String, password: String) {
-        val request = RegMandorRequest(fullName, username, email, password)
-
-        // Use ApiConfig.instance to call the registerMandor API
-        ApiConfig.instance.registerMandor(request).enqueue(object : Callback<RegMandorResponse> {
-            override fun onResponse(call: Call<RegMandorResponse>, response: Response<RegMandorResponse>) {
-                if (response.isSuccessful) {
-                    val responseBody = response.body()
-                    Toast.makeText(
-                        this@RegisterActivity,
-                        "Registration Successful: ${responseBody?.message}",
-                        Toast.LENGTH_SHORT
-                    ).show()
-
-                    // Move to LoginActivity
-                    val intent = Intent(this@RegisterActivity, LoginActivity::class.java)
-                    startActivity(intent)
-                    finish()
-                } else {
-                    val errorBody = response.errorBody()?.string()
-                    Log.e("RegisterError", "Error: $errorBody")
-                    Toast.makeText(
-                        this@RegisterActivity,
-                        "Registration Failed: ${response.message()}",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
+        registerViewModel.errorMessage.observe(this, Observer { errorMessage ->
+            if (errorMessage.isNotEmpty()) {
+                Toast.makeText(this, errorMessage, Toast.LENGTH_SHORT).show()
             }
+        })
 
-            override fun onFailure(call: Call<RegMandorResponse>, t: Throwable) {
-                Log.e("RegisterError", "Network Error: ${t.message}")
-                Toast.makeText(
-                    this@RegisterActivity,
-                    "Network Error: ${t.message}",
-                    Toast.LENGTH_SHORT
-                ).show()
+        registerViewModel.loading.observe(this, Observer { isLoading ->
+            if (isLoading) {
+                // Show loading indicator
+            } else {
+                // Hide loading indicator
             }
         })
     }

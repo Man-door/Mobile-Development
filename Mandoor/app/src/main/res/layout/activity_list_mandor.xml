@@ -7,10 +7,10 @@
     android:background="@color/primary_background">
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
+        android:id="@+id/toolbarlist"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="@color/gray"
+        android:background="@color/light_gray"
         android:elevation="4dp"
         android:titleTextColor="@android:color/white"
         app:navigationIcon="@drawable/back"
@@ -28,6 +28,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/toolbar" />
+        app:layout_constraintTop_toBottomOf="@id/toolbarlist" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

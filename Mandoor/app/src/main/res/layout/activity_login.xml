@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/primary_background">
@@ -34,7 +35,7 @@
         android:layout_marginTop="20dp" />
 
     <!-- Email Input -->
-    <EditText
+    <com.dicoding.mandoor.utils.EmailEditText
         android:id="@+id/email"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -42,6 +43,8 @@
         android:inputType="textEmailAddress"
         android:background="@android:drawable/edit_text"
         android:padding="10dp"
+        android:drawableStart="@drawable/email"
+        android:drawablePadding="10dp"
         app:layout_constraintTop_toBottomOf="@id/title"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -57,39 +60,31 @@
         android:inputType="textPassword"
         android:background="@android:drawable/edit_text"
         android:padding="10dp"
+        android:drawableEnd="@drawable/visibility_off"
+        android:drawableStart="@drawable/lock"
+        android:drawablePadding="10dp"
         app:layout_constraintTop_toBottomOf="@id/email"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="10dp"
-        android:layout_marginHorizontal="20dp" />
+        android:layout_marginHorizontal="20dp"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:clickable="true"/>
 
-    <!-- Forgot Password -->
-    <TextView
-        android:id="@+id/forgot_password"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Forgot password?"
-        android:textSize="14sp"
-        android:textColor="#FFFFFF"
-        android:textStyle="italic"
-        app:layout_constraintTop_toBottomOf="@id/password"
-        app:layout_constraintEnd_toEndOf="@id/password"
-        android:layout_marginTop="10dp" />
-
-    <!-- Login Button -->
     <Button
         android:id="@+id/login_button"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="16dp"
+        android:backgroundTint="@color/secondary_button_border"
         android:text="Log in"
         android:textColor="@color/white"
-        android:backgroundTint="@color/secondary_button_border"
         android:textStyle="bold"
-        app:layout_constraintTop_toBottomOf="@id/forgot_password"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="20dp"
-        android:layout_marginHorizontal="20dp" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/password" />
 
     <!-- Google Sign In -->
 

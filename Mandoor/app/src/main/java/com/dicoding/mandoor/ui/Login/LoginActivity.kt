@@ -1,32 +1,31 @@
 package com.dicoding.mandoor.ui.Login
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
+import android.text.InputType
+import android.view.MotionEvent
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 import com.dicoding.mandoor.MainActivity
-import com.dicoding.mandoor.api.ApiConfig
-import com.dicoding.mandoor.api.LogMandorRequest
-import com.dicoding.mandoor.api.LogUserRequest
+import com.dicoding.mandoor.R
 import com.dicoding.mandoor.databinding.ActivityLoginBinding
-import com.dicoding.mandoor.response.LogMandorResponse
-import com.dicoding.mandoor.response.LogUserResponse
 import com.dicoding.mandoor.ui.Register.RegisterActivity
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 class LoginActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityLoginBinding
+    private val loginViewModel: LoginViewModel by viewModels()
 
+    @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Get the user type (user or mandor) passed from onboarding
-        val userType = intent.getStringExtra("USER_TYPE")  // Expecting "user" or "mandor"
+        val userType = intent.getStringExtra("USER_TYPE")
 
         binding.registerLink.setOnClickListener {
             val intent = Intent(this@LoginActivity, RegisterActivity::class.java)
@@ -34,102 +33,63 @@ class LoginActivity : AppCompatActivity() {
             finish()
         }
 
+        binding.password.setOnTouchListener { _, event ->
+            if (event.action == MotionEvent.ACTION_UP) {
+                if (event.rawX >= (binding.password.right - binding.password.compoundDrawables[2].bounds.width())) {
+                    if (binding.password.inputType == InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD) {
+                        binding.password.inputType =
+                            InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
+                        binding.password.setCompoundDrawablesWithIntrinsicBounds(
+                            R.drawable.lock, 0, R.drawable.visibility, 0
+                        )
+                    } else {
+                        binding.password.inputType =
+                            InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
+                        binding.password.setCompoundDrawablesWithIntrinsicBounds(
+                            R.drawable.lock, 0, R.drawable.visibility_off, 0
+                        )
+                    }
+                    binding.password.setSelection(binding.password.text?.length ?: 0)
+                    true
+                } else {
+                    false
+                }
+            } else {
+                false
+            }
+        }
+
         binding.loginButton.setOnClickListener {
             val email = binding.email.text.toString().trim()
             val password = binding.password.text.toString().trim()
 
-            if (email.isEmpty() || password.isEmpty()) {
-                Toast.makeText(this, "Please fill all fields", Toast.LENGTH_SHORT).show()
+            if (userType == "user") {
+                loginViewModel.loginUser(email, password)
             } else {
-                if (userType == "mandor") {
-                    loginMandor(email, password)
-                } else {
-                    loginUser(email, password)
-                }
+                Toast.makeText(this, "This account type is not supported", Toast.LENGTH_SHORT).show()
             }
         }
-    }
 
-    private fun loginUser(email: String, password: String) {
-        val request = LogUserRequest(email, password)
-
-        ApiConfig.instance.loginUser(request).enqueue(object : Callback<LogUserResponse> {
-            override fun onResponse(call: Call<LogUserResponse>, response: Response<LogUserResponse>) {
-                if (response.isSuccessful) {
-                    val responseBody = response.body()
-                    Toast.makeText(
-                        this@LoginActivity,
-                        "Login Successful! Welcome.",
-                        Toast.LENGTH_SHORT
-                    ).show()
-
-                    // Save token
-                    val sharedPreferences = getSharedPreferences("UserSession", MODE_PRIVATE)
-                    val editor = sharedPreferences.edit()
-                    editor.putString("user_token", responseBody?.token)
-                    editor.apply()
-
-                    // Move to MainActivity
-                    val intent = Intent(this@LoginActivity, MainActivity::class.java)
-                    startActivity(intent)
-                    finish()
-                } else {
-                    Toast.makeText(
-                        this@LoginActivity,
-                        "Login Failed: ${response.message()}",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
-            }
-
-            override fun onFailure(call: Call<LogUserResponse>, t: Throwable) {
-                Toast.makeText(
-                    this@LoginActivity,
-                    "Network Error: ${t.message}",
-                    Toast.LENGTH_SHORT
-                ).show()
+        loginViewModel.loading.observe(this, Observer { isLoading ->
+            if (isLoading) {
+            } else {
             }
         })
-    }
 
-    private fun loginMandor(email: String, password: String) {
-        val request = LogMandorRequest(email, password)
-
-        ApiConfig.instance.loginMandor(request).enqueue(object : Callback<LogMandorResponse> {
-            override fun onResponse(call: Call<LogMandorResponse>, response: Response<LogMandorResponse>) {
-                if (response.isSuccessful) {
-                    val responseBody = response.body()
-                    Toast.makeText(
-                        this@LoginActivity,
-                        "Login Successful! Welcome.",
-                        Toast.LENGTH_SHORT
-                    ).show()
-
-                    // Save token
-                    val sharedPreferences = getSharedPreferences("MandorSession", MODE_PRIVATE)
-                    val editor = sharedPreferences.edit()
-                    editor.putString("mandor_token", responseBody?.token)
-                    editor.apply()
-
-                    // Move to MainActivity
-                    val intent = Intent(this@LoginActivity, MainActivity::class.java)
-                    startActivity(intent)
-                    finish()
-                } else {
-                    Toast.makeText(
-                        this@LoginActivity,
-                        "Login Failed: ${response.message()}",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
+        // Observe login success
+        loginViewModel.loginSuccess.observe(this, Observer { success ->
+            if (success) {
+                Toast.makeText(this, "Login Successful! Welcome.", Toast.LENGTH_SHORT).show()
+                val intent = Intent(this@LoginActivity, MainActivity::class.java)
+                startActivity(intent)
+                finish()
             }
+        })
 
-            override fun onFailure(call: Call<LogMandorResponse>, t: Throwable) {
-                Toast.makeText(
-                    this@LoginActivity,
-                    "Network Error: ${t.message}",
-                    Toast.LENGTH_SHORT
-                ).show()
+        // Observe error message
+        loginViewModel.errorMessage.observe(this, Observer { errorMessage ->
+            if (errorMessage.isNotEmpty()) {
+                Toast.makeText(this, errorMessage, Toast.LENGTH_SHORT).show()
             }
         })
     }
