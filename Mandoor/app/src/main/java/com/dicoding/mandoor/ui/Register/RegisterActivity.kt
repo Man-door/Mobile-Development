@@ -4,22 +4,15 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.text.InputType
-import android.util.Log
 import android.view.MotionEvent
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.dicoding.mandoor.R
-import com.dicoding.mandoor.api.ApiConfig
-import com.dicoding.mandoor.api.RegMandorRequest
-import com.dicoding.mandoor.api.RegUserRequest
+import com.dicoding.mandoor.adapter.LoadingAdapter
 import com.dicoding.mandoor.databinding.ActivityRegisterBinding
-import com.dicoding.mandoor.response.RegUserResponse
 import com.dicoding.mandoor.ui.Login.LoginActivity
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 class RegisterActivity : AppCompatActivity() {
 
@@ -32,7 +25,13 @@ class RegisterActivity : AppCompatActivity() {
         binding = ActivityRegisterBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        val loadingAdapter = LoadingAdapter(this)
+
         val userType = intent.getStringExtra("USER_TYPE")
+
+        val intent = Intent(this, LoginActivity::class.java)
+        intent.putExtra("USER_TYPE", "user")
+        startActivity(intent)
 
         binding.loginLink.setOnClickListener {
             val intent = Intent(this@RegisterActivity, LoginActivity::class.java)
@@ -72,12 +71,19 @@ class RegisterActivity : AppCompatActivity() {
             val email = binding.email.text.toString().trim()
             val password = binding.password.text.toString().trim()
 
-            if (userType == "mandor") {
-                registerViewModel.registerMandor(fullName, username, email, password)
-            } else {
+            if (userType == "user") {
                 registerViewModel.registerUser(fullName, username, email, password)
+            } else {
             }
         }
+
+        registerViewModel.loading.observe(this, Observer { isLoading ->
+            if (isLoading) {
+                loadingAdapter.showLoading()
+            } else {
+                loadingAdapter.dismissLoading()
+            }
+        })
 
         registerViewModel.registerSuccess.observe(this, Observer { success ->
             if (success) {
@@ -93,15 +99,8 @@ class RegisterActivity : AppCompatActivity() {
                 Toast.makeText(this, errorMessage, Toast.LENGTH_SHORT).show()
             }
         })
-
-        registerViewModel.loading.observe(this, Observer { isLoading ->
-            if (isLoading) {
-                // Show loading indicator
-            } else {
-                // Hide loading indicator
-            }
-        })
     }
 }
+
 
 

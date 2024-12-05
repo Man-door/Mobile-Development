@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.dicoding.mandoor.MainActivity
 import com.dicoding.mandoor.R
+import com.dicoding.mandoor.adapter.LoadingAdapter
 import com.dicoding.mandoor.databinding.ActivityLoginBinding
 import com.dicoding.mandoor.ui.Register.RegisterActivity
 
@@ -26,6 +27,8 @@ class LoginActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val userType = intent.getStringExtra("USER_TYPE")
+
+        val loadingAdapter = LoadingAdapter(this)
 
         binding.registerLink.setOnClickListener {
             val intent = Intent(this@LoginActivity, RegisterActivity::class.java)
@@ -63,37 +66,30 @@ class LoginActivity : AppCompatActivity() {
             val email = binding.email.text.toString().trim()
             val password = binding.password.text.toString().trim()
 
-            if (userType == "user") {
-                loginViewModel.loginUser(email, password)
-            } else {
-                Toast.makeText(this, "This account type is not supported", Toast.LENGTH_SHORT).show()
-            }
+            loginViewModel.loginUser(email, password)
+
+            loginViewModel.loading.observe(this, Observer { isLoading ->
+                if (isLoading) {
+                    loadingAdapter.showLoading()
+                } else {
+                    loadingAdapter.dismissLoading()
+                }
+            })
+
+            loginViewModel.loginSuccess.observe(this, Observer { success ->
+                if (success) {
+                    Toast.makeText(this, "Login Successful! Welcome.", Toast.LENGTH_SHORT).show()
+                    val intent = Intent(this@LoginActivity, MainActivity::class.java)
+                    startActivity(intent)
+                    finish()
+                }
+            })
+
+            loginViewModel.errorMessage.observe(this, Observer { errorMessage ->
+                if (errorMessage.isNotEmpty()) {
+                    Toast.makeText(this, errorMessage, Toast.LENGTH_SHORT).show()
+                }
+            })
         }
-
-        loginViewModel.loading.observe(this, Observer { isLoading ->
-            if (isLoading) {
-            } else {
-            }
-        })
-
-        // Observe login success
-        loginViewModel.loginSuccess.observe(this, Observer { success ->
-            if (success) {
-                Toast.makeText(this, "Login Successful! Welcome.", Toast.LENGTH_SHORT).show()
-                val intent = Intent(this@LoginActivity, MainActivity::class.java)
-                startActivity(intent)
-                finish()
-            }
-        })
-
-        // Observe error message
-        loginViewModel.errorMessage.observe(this, Observer { errorMessage ->
-            if (errorMessage.isNotEmpty()) {
-                Toast.makeText(this, errorMessage, Toast.LENGTH_SHORT).show()
-            }
-        })
     }
 }
-
-
-

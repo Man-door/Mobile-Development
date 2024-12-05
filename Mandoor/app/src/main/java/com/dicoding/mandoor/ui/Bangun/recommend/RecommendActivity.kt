@@ -18,11 +18,16 @@ class RecommendActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val recyclerView = binding.rvMandors
-        recyclerView.layoutManager = LinearLayoutManager(this)
+        recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
 
         val mandorList = listOf(
-            Mandor(R.drawable.pak_vinsen, "Pak Vinsen", "4.5", "15 Proyek", "Jabodetabek", "Rp 250.000"),
-            Mandor(R.drawable.pak_vinsen, "Pak Joko", "4.0", "12 Proyek", "Bandung", "Rp 300.000")
+            Mandor(R.drawable.pak_vinsen, R.string.mandorname.toString(),
+                R.string.total_proyek.toString(),
+                R.drawable.star.toString(), R.string.rating.toString(), R.string.descmandor.toString()
+            ),
+            Mandor(R.drawable.pak_vinsen, R.string.mandorname.toString(),
+                R.string.total_proyek.toString(),
+                R.drawable.star.toString(), R.string.rating.toString(), R.string.descmandor.toString())
         )
 
         val adapter = RecommendAdapter(mandorList)

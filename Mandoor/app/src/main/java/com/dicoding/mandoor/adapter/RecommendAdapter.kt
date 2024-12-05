@@ -13,8 +13,8 @@ class RecommendAdapter(private val mandorList: List<Mandor>) : RecyclerView.Adap
             binding.mandorname.text = mandor.name
             binding.ratemandor.text = mandor.rating
             binding.totalproyek.text = mandor.totalProyek
-            binding.jangkauanmandor.text = mandor.jangkauan
-            binding.hargamandor.text = mandor.harga
+            binding.jangkauanmandorrecommend.text = mandor.jangkauan
+            binding.descmandor.text = mandor.deskripsi
         }
     }
 

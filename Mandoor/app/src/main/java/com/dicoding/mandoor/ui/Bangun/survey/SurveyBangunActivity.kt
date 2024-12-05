@@ -12,6 +12,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.dicoding.mandoor.R
+import com.dicoding.mandoor.adapter.LoadingAdapter
 import com.dicoding.mandoor.ui.Bangun.recommend.RecommendActivity
 
 class SurveyBangunActivity : AppCompatActivity() {
@@ -20,10 +21,13 @@ class SurveyBangunActivity : AppCompatActivity() {
     private val REQUEST_CODE_CAMERA = 1002
 
     private val surveyBangunViewModel: SurveyBangunViewModel by viewModels()
+    private lateinit var loadingAdapter: LoadingAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_survey_bangun)
+
+        loadingAdapter = LoadingAdapter(this)
 
         val toolbar = findViewById<androidx.appcompat.widget.Toolbar>(R.id.toolbarsurveybangun)
         setSupportActionBar(toolbar)
@@ -31,12 +35,13 @@ class SurveyBangunActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setHomeButtonEnabled(true)
 
-        val simpanButton = findViewById<Button>(R.id.btnSimpan)
+        val simpanButton = findViewById<Button>(R.id.btnsimpanbangun)
         simpanButton.setOnClickListener {
-            // Navigasi ke RecommendActivity
+            loadingAdapter.showLoading()
             surveyBangunViewModel.navigateToRecommend()
             val intent = Intent(this, RecommendActivity::class.java)
             startActivity(intent)
+            loadingAdapter.dismissLoading()
         }
 
         val galleryButton = findViewById<Button>(R.id.btn_gallery)
@@ -49,18 +54,14 @@ class SurveyBangunActivity : AppCompatActivity() {
             openCamera()
         }
 
-        // Mengamati perubahan data gambar dari ViewModel
+
         surveyBangunViewModel.selectedImageUri.observe(this, Observer { uri ->
-            // Handle URI gambar jika diperlukan
             if (uri != null) {
-                // Misalnya update UI atau proses gambar
             }
         })
 
         surveyBangunViewModel.selectedBitmap.observe(this, Observer { bitmap ->
-            // Handle Bitmap gambar jika diperlukan
             if (bitmap != null) {
-                // Misalnya update UI atau proses bitmap
             }
         })
     }
@@ -86,11 +87,11 @@ class SurveyBangunActivity : AppCompatActivity() {
             when (requestCode) {
                 REQUEST_CODE_GALLERY -> {
                     val selectedImageUri = data?.data
-                    surveyBangunViewModel.setImageUri(selectedImageUri) // Update ViewModel with the URI
+                    surveyBangunViewModel.setImageUri(selectedImageUri)
                 }
                 REQUEST_CODE_CAMERA -> {
                     val photo = data?.extras?.get("data") as? Bitmap
-                    surveyBangunViewModel.setBitmap(photo) // Update ViewModel with the Bitmap
+                    surveyBangunViewModel.setBitmap(photo)
                 }
             }
         }

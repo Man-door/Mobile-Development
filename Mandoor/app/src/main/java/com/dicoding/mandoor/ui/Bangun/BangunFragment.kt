@@ -9,6 +9,7 @@ import androidx.cardview.widget.CardView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.dicoding.mandoor.R
+import com.dicoding.mandoor.adapter.LoadingAdapter
 import com.dicoding.mandoor.databinding.FragmentBangunBinding
 import com.dicoding.mandoor.ui.Bangun.survey.SurveyBangunActivity
 import com.dicoding.mandoor.ui.Bangun.survey.SurveyRenovActivity
@@ -19,6 +20,7 @@ class BangunFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val bangunViewModel: BangunViewModel by activityViewModels()
+    private lateinit var loadingAdapter: LoadingAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -26,6 +28,8 @@ class BangunFragment : Fragment() {
     ): View? {
         _binding = FragmentBangunBinding.inflate(inflater, container, false)
         val root: View = binding.root
+
+        loadingAdapter = LoadingAdapter(requireContext())
 
         bangunViewModel.setServiceData()
 
@@ -46,15 +50,19 @@ class BangunFragment : Fragment() {
         }
 
         binding.root.findViewById<CardView>(R.id.cvbangun).setOnClickListener {
+            loadingAdapter.showLoading()
             val intent = Intent(activity, SurveyBangunActivity::class.java)
             intent.putExtra("service_type", "bangun")
             startActivity(intent)
+            loadingAdapter.dismissLoading()
         }
 
         binding.root.findViewById<CardView>(R.id.cvrenov).setOnClickListener {
+            loadingAdapter.showLoading()
             val intent = Intent(activity, SurveyRenovActivity::class.java)
             intent.putExtra("service_type", "renovasi")
             startActivity(intent)
+            loadingAdapter.dismissLoading()
         }
 
         return root

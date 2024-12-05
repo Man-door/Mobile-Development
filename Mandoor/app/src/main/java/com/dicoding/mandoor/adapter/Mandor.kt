@@ -6,5 +6,5 @@ data class Mandor(
     val rating: String,
     val totalProyek: String,
     val jangkauan: String,
-    val harga: String
+    val deskripsi: String
 )

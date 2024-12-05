@@ -37,7 +37,7 @@
             card_view:layout_constraintHorizontal_bias="0.0"
             card_view:layout_constraintStart_toStartOf="parent"
             card_view:layout_constraintTop_toBottomOf="@+id/newsImage"
-            tools:text="News Title Example" />
+            tools:text="@string/news_title" />
 
         <TextView
             android:id="@+id/newsDescription"
@@ -51,7 +51,7 @@
             card_view:layout_constraintEnd_toEndOf="parent"
             card_view:layout_constraintStart_toStartOf="parent"
             card_view:layout_constraintTop_toBottomOf="@+id/newsTitle"
-            tools:text="This is a sample description for the news article to show how it looks." />
+            tools:text="@string/news_description" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

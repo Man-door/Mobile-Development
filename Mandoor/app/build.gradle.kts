@@ -49,6 +49,7 @@ dependencies {
     implementation(libs.androidx.navigation.fragment.ktx)
     implementation(libs.androidx.navigation.ui.ktx)
     implementation(libs.androidx.activity)
+    implementation (libs.androidx.core.splashscreen)
     testImplementation(libs.junit)
     implementation (libs.de.circleimageview)
     implementation (libs.squareup.retrofit)

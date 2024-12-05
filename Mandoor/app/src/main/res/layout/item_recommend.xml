@@ -3,7 +3,7 @@
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="480dp"
+    android:layout_height="320dp"
     android:layout_gravity="center"
     android:layout_margin="64dp"
     card_view:cardCornerRadius="16dp"
@@ -17,7 +17,7 @@
         <ImageView
             android:id="@+id/mandorImage"
             android:layout_width="match_parent"
-            android:layout_height="235dp"
+            android:layout_height="180dp"
             android:scaleType="centerCrop"
             android:src="@drawable/pak_vinsen"
             android:background="@drawable/circle_background"
@@ -28,12 +28,12 @@
 
         <TextView
             android:id="@+id/mandorname"
-            android:layout_width="80dp"
+            android:layout_width="150dp"
             android:layout_height="30dp"
             android:layout_marginTop="8dp"
             android:ellipsize="end"
             android:maxLines="2"
-            android:textSize="24sp"
+            android:textSize="18sp"
             android:textStyle="bold"
             card_view:layout_constraintEnd_toEndOf="parent"
             card_view:layout_constraintHorizontal_bias="0.0"
@@ -42,9 +42,9 @@
             tools:text="@string/mandorname" />
 
         <ImageView
-            android:id="@+id/rateimage"
-            android:layout_width="24dp"
-            android:layout_height="30dp"
+            android:id="@+id/rateimagerecommend"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
             android:layout_marginTop="8dp"
             android:src="@drawable/star"
@@ -59,21 +59,21 @@
             android:layout_marginTop="8dp"
             android:ellipsize="end"
             android:maxLines="2"
-            android:textSize="24sp"
+            android:textSize="14sp"
             android:textStyle="bold"
             card_view:layout_constraintEnd_toEndOf="parent"
             card_view:layout_constraintHorizontal_bias="0.0"
-            card_view:layout_constraintStart_toEndOf="@+id/rateimage"
+            card_view:layout_constraintStart_toEndOf="@+id/rateimagerecommend"
             card_view:layout_constraintTop_toBottomOf="@+id/mandorImage"
             tools:text="@string/rating" />
 
         <TextView
             android:id="@+id/totalproyek"
-            android:layout_width="86dp"
+            android:layout_width="60dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:textColor="@color/black"
-            android:textSize="14sp"
+            android:textSize="10sp"
             card_view:layout_constraintEnd_toEndOf="parent"
             card_view:layout_constraintHorizontal_bias="0.0"
             card_view:layout_constraintStart_toStartOf="parent"
@@ -81,42 +81,42 @@
             tools:text="@string/total_proyek" />
 
         <TextView
-            android:id="@+id/numproyek"
+            android:id="@+id/numberproyekrecommend"
             android:layout_width="24dp"
             android:layout_height="wrap_content"
             android:textColor="@color/black"
-            android:textSize="14sp"
+            android:textSize="10sp"
             android:text="@string/num_proyek"
             card_view:layout_constraintBottom_toBottomOf="@+id/totalproyek"
             card_view:layout_constraintStart_toEndOf="@+id/totalproyek"
             card_view:layout_constraintTop_toTopOf="@+id/totalproyek" />
 
         <TextView
-            android:id="@+id/jangkauanmandor"
+            android:id="@+id/jangkauanmandorrecommend"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:ellipsize="end"
             android:maxLines="3"
             android:textColor="@color/black"
-            android:textSize="14sp"
+            android:textSize="10sp"
             card_view:layout_constraintEnd_toEndOf="parent"
             card_view:layout_constraintStart_toStartOf="parent"
             card_view:layout_constraintTop_toBottomOf="@+id/totalproyek"
             tools:text="@string/jangkauan"/>
 
         <TextView
-            android:id="@+id/hargamandor"
+            android:id="@+id/descmandor"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:ellipsize="end"
             android:maxLines="3"
             android:textColor="@color/black"
-            android:textSize="12sp"
+            android:textSize="8sp"
             card_view:layout_constraintEnd_toEndOf="parent"
             card_view:layout_constraintStart_toStartOf="parent"
-            card_view:layout_constraintTop_toBottomOf="@+id/jangkauanmandor"
+            card_view:layout_constraintTop_toBottomOf="@+id/jangkauanmandorrecommend"
             tools:text="@string/descmandor"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

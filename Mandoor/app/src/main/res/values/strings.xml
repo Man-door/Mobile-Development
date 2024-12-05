@@ -64,4 +64,11 @@
     <string name="hintjenisbangun">Pilih jenis bangunan anda</string>
     <string name="title_bangun">Bangun</string>
     <string name="num_proyek">5</string>
+    <string name="news_title">News Title</string>
+    <string name="news_description">News Description</string>
+    <string name="profil_mandor">Profil Mandor</string>
+    <string name="pending">Pending</string>
+    <string name="booking_list">Booking List</string>
+    <string name="loading">loading</string>
+    <string name="pembayaran">Pembayaran</string>
 </resources>

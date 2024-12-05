@@ -32,33 +32,10 @@ class RegisterViewModel(application: Application) : AndroidViewModel(application
         val request = RegUserRequest(fullName, username, email, password)
 
         ApiConfig.instance.registerUser(request).enqueue(object : Callback<RegUserResponse> {
-            override fun onResponse(call: Call<RegUserResponse>, response: Response<RegUserResponse>) {
-                _loading.value = false
-                if (response.isSuccessful) {
-                    _registerSuccess.value = true
-                } else {
-                    _errorMessage.value = "Registration Failed: ${response.message()}"
-                }
-            }
-
-            override fun onFailure(call: Call<RegUserResponse>, t: Throwable) {
-                _loading.value = false
-                _errorMessage.value = "Network Error: ${t.message}"
-            }
-        })
-    }
-
-    fun registerMandor(fullName: String, username: String, email: String, password: String) {
-        if (fullName.isEmpty() || username.isEmpty() || email.isEmpty() || password.isEmpty()) {
-            _errorMessage.value = "Please fill all fields"
-            return
-        }
-
-        _loading.value = true
-        val request = RegUserRequest(fullName, username, email, password)
-
-        ApiConfig.instance.registerUser(request).enqueue(object : Callback<RegUserResponse> {
-            override fun onResponse(call: Call<RegUserResponse>, response: Response<RegUserResponse>) {
+            override fun onResponse(
+                call: Call<RegUserResponse>,
+                response: Response<RegUserResponse>
+            ) {
                 _loading.value = false
                 if (response.isSuccessful) {
                     _registerSuccess.value = true

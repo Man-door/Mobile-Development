@@ -280,7 +280,7 @@
         </LinearLayout>
 
         <Button
-            android:id="@+id/btnSimpan"
+            android:id="@+id/btnsimpanbangun"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="32dp"

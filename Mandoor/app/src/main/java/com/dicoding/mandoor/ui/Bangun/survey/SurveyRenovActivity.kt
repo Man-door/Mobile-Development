@@ -13,6 +13,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.dicoding.mandoor.R
+import com.dicoding.mandoor.adapter.LoadingAdapter
 import com.dicoding.mandoor.ui.Bangun.recommend.RecommendActivity
 
 class SurveyRenovActivity : AppCompatActivity() {
@@ -21,11 +22,14 @@ class SurveyRenovActivity : AppCompatActivity() {
     private val REQUEST_CODE_CAMERA = 1002
 
     private val surveyRenovViewModel: SurveyRenovViewModel by viewModels()
+    private lateinit var loadingAdapter: LoadingAdapter
 
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_survey_renov)
+
+        loadingAdapter = LoadingAdapter (this)
 
         val toolbar = findViewById<androidx.appcompat.widget.Toolbar>(R.id.toolbarrenov)
         setSupportActionBar(toolbar)
@@ -33,12 +37,13 @@ class SurveyRenovActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setHomeButtonEnabled(true)
 
-        val simpanButton = findViewById<Button>(R.id.btnSimpan)
+        val simpanButton = findViewById<Button>(R.id.btnsimpanrenov)
         simpanButton.setOnClickListener {
-            // Navigasi ke RecommendActivity
+            loadingAdapter.showLoading()
             surveyRenovViewModel.navigateToRecommend()
             val intent = Intent(this, RecommendActivity::class.java)
             startActivity(intent)
+            loadingAdapter.dismissLoading()
         }
 
         val galleryButton = findViewById<Button>(R.id.btn_gallery)
@@ -51,18 +56,13 @@ class SurveyRenovActivity : AppCompatActivity() {
             openCamera()
         }
 
-        // Mengamati perubahan data gambar dari ViewModel
         surveyRenovViewModel.selectedImageUri.observe(this, Observer { uri ->
-            // Handle URI gambar jika diperlukan
             if (uri != null) {
-                // Misalnya update UI atau proses gambar
             }
         })
 
         surveyRenovViewModel.selectedBitmap.observe(this, Observer { bitmap ->
-            // Handle Bitmap gambar jika diperlukan
             if (bitmap != null) {
-                // Misalnya update UI atau proses bitmap
             }
         })
     }

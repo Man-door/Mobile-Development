@@ -37,7 +37,6 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
                 _loading.value = false
                 if (response.isSuccessful) {
                     val responseBody = response.body()
-                    // Save token in SharedPreferences
                     val sharedPreferences = getApplication<Application>().getSharedPreferences("UserSession", Application.MODE_PRIVATE)
                     val editor = sharedPreferences.edit()
                     editor.putString("user_token", responseBody?.token)

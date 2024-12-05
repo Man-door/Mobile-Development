@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="8dp"
@@ -14,7 +15,7 @@
         android:padding="16dp">
 
         <ImageView
-            android:id="@+id/itemImagelist"
+            android:id="@+id/itemImage"
             android:layout_width="87dp"
             android:layout_height="136dp"
             android:layout_marginEnd="16dp"
@@ -26,7 +27,7 @@
             app:layout_constraintBottom_toBottomOf="parent" />
 
         <TextView
-            android:id="@+id/namamandor"
+            android:id="@+id/namamandorbook"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
@@ -38,56 +39,71 @@
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.035"
-            app:layout_constraintStart_toEndOf="@id/itemImagelist"
+            app:layout_constraintStart_toEndOf="@id/itemImage"
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
-            android:id="@+id/rateimagelist"
+            android:id="@+id/rateimagebook"
             android:layout_width="33dp"
             android:layout_height="28dp"
             android:layout_marginStart="8dp"
             android:src="@drawable/star"
-            app:layout_constraintBottom_toBottomOf="@+id/namamandor"
-            app:layout_constraintStart_toEndOf="@+id/namamandor"
-            app:layout_constraintTop_toTopOf="@+id/namamandor" />
+            app:layout_constraintBottom_toBottomOf="@+id/namamandorbook"
+            app:layout_constraintStart_toEndOf="@+id/namamandorbook"
+            app:layout_constraintTop_toTopOf="@+id/namamandorbook" />
 
         <TextView
-            android:id="@+id/numratelist"
+            android:id="@+id/numratebook"
             android:layout_width="36dp"
             android:layout_height="wrap_content"
             android:text="@string/rating"
             android:textColor="@color/black"
             android:textSize="18sp"
-            app:layout_constraintBottom_toBottomOf="@+id/rateimagelist"
-            app:layout_constraintStart_toEndOf="@+id/rateimagelist"
-            app:layout_constraintTop_toTopOf="@+id/rateimagelist" />
+            app:layout_constraintBottom_toBottomOf="@+id/rateimagebook"
+            app:layout_constraintStart_toEndOf="@+id/rateimagebook"
+            app:layout_constraintTop_toTopOf="@+id/rateimagebook" />
 
         <TextView
-            android:id="@+id/totproyeklist"
+            android:id="@+id/statusText"
+            android:layout_width="84dp"
+            android:layout_height="33dp"
+            android:layout_marginStart="32dp"
+            android:background="@drawable/pending"
+            android:gravity="center"
+            android:text="@string/pending"
+            android:textColor="@android:color/white"
+            android:textSize="10sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/numratebook"
+            app:layout_constraintStart_toEndOf="@+id/numratebook"
+            app:layout_constraintTop_toTopOf="@+id/numratebook" />
+
+        <TextView
+            android:id="@+id/totproyekbook"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:text="@string/total_proyek"
             android:textColor="@color/black"
             android:textSize="12sp"
-            app:layout_constraintEnd_toEndOf="@+id/namamandor"
-            app:layout_constraintStart_toStartOf="@+id/namamandor"
-            app:layout_constraintTop_toBottomOf="@+id/namamandor" />
+            app:layout_constraintEnd_toEndOf="@+id/namamandorbook"
+            app:layout_constraintStart_toStartOf="@+id/namamandorbook"
+            app:layout_constraintTop_toBottomOf="@+id/namamandorbook" />
 
         <TextView
-            android:id="@+id/numberproyeklist"
+            android:id="@+id/numberproyekbook"
             android:layout_width="24dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
             android:text="@string/num_proyek"
             android:textColor="@color/black"
             android:textSize="12sp"
-            app:layout_constraintBottom_toBottomOf="@+id/totproyeklist"
-            app:layout_constraintStart_toEndOf="@+id/totproyeklist"
-            app:layout_constraintTop_toTopOf="@+id/totproyeklist" />
+            app:layout_constraintBottom_toBottomOf="@+id/totproyek"
+            app:layout_constraintStart_toEndOf="@+id/totproyek"
+            app:layout_constraintTop_toTopOf="@+id/totproyek" />
 
         <TextView
-            android:id="@+id/jangkauanmandorlist"
+            android:id="@+id/jangkauanmandorbook"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
@@ -96,13 +112,13 @@
             android:text="@string/jangkauan"
             android:textColor="@color/black"
             android:textSize="12sp"
-            app:layout_constraintEnd_toEndOf="@+id/totproyeklist"
+            app:layout_constraintEnd_toEndOf="@+id/totproyekbook"
             app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@+id/totproyeklist"
-            app:layout_constraintTop_toBottomOf="@+id/totproyeklist" />
+            app:layout_constraintStart_toStartOf="@+id/totproyekbook"
+            app:layout_constraintTop_toBottomOf="@+id/totproyekbook" />
 
         <TextView
-            android:id="@+id/deskripmandorlist"
+            android:id="@+id/deskripmandor"
             android:layout_width="287dp"
             android:layout_height="40dp"
             android:layout_marginTop="4dp"
@@ -111,10 +127,10 @@
             android:text="@string/descmandor"
             android:textColor="@color/black"
             android:textSize="10sp"
-            app:layout_constraintEnd_toEndOf="@+id/jangkauanmandorlist"
+            app:layout_constraintEnd_toEndOf="@+id/jangkauanmandorbook"
             app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@+id/jangkauanmandorlist"
-            app:layout_constraintTop_toBottomOf="@+id/jangkauanmandorlist" />
+            app:layout_constraintStart_toStartOf="@+id/jangkauanmandorbook"
+            app:layout_constraintTop_toBottomOf="@+id/jangkauanmandorbook" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

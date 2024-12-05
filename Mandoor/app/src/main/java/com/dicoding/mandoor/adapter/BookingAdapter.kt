@@ -23,7 +23,6 @@ class BookingAdapter(private var bookingList: List<Booking>) : RecyclerView.Adap
             tvbangun.text = booking.serviceType
             tvharga.text = booking.price
             statusText.text = booking.status
-            tvdate.text = booking.date
         }
     }
 

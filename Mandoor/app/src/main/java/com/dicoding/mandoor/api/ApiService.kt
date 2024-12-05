@@ -21,7 +21,6 @@ data class LogUserRequest(
     val Password: String
 )
 
-
 interface ApiService {
     @Headers("Content-Type: application/json")
     @POST("/register")
@@ -31,8 +30,6 @@ interface ApiService {
     @POST("/login")
     fun loginUser(@Body request: LogUserRequest): Call<LogUserResponse>
 
-
-    // Get News
     @GET("/news")
     fun getNews(): Call<NewsResponse>
 }

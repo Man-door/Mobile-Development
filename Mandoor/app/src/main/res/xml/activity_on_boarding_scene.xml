@@ -14,6 +14,17 @@
     </Transition>
 
     <ConstraintSet android:id="@+id/start">
+        <Constraint
+            motion:layout_editor_absoluteY="49dp"
+            android:layout_height="237dp"
+            android:layout_width="184dp"
+            motion:layout_constraintStart_toEndOf="parent"
+            android:id="@+id/logoMenu2" />
+        <Constraint
+            android:layout_height="300dp"
+            android:layout_width="0dp"
+            android:id="@+id/logoMenu4"
+            motion:layout_constraintStart_toEndOf="parent" />
     </ConstraintSet>
 
     <ConstraintSet android:id="@+id/end">

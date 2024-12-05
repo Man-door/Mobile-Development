@@ -6,6 +6,5 @@ data class Booking(
     val serviceType: String,
     val price: String,
     val status: String,
-    val date: String,
 )
 

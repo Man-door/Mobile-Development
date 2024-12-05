@@ -57,7 +57,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="4dp"
                 android:layout_marginBottom="92dp"
-                android:text="@string/custname"
+                android:text="@string/mandorname"
                 android:textColor="@color/black"
                 android:textSize="16sp"
                 android:textStyle="bold"

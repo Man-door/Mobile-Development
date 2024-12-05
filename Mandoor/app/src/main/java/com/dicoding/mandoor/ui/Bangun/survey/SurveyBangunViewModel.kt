@@ -14,18 +14,14 @@ class SurveyBangunViewModel : ViewModel() {
     private val _selectedBitmap = MutableLiveData<Bitmap?>()
     val selectedBitmap: LiveData<Bitmap?> get() = _selectedBitmap
 
-    // Fungsi untuk memperbarui URI gambar dari galeri
     fun setImageUri(uri: Uri?) {
         _selectedImageUri.value = uri
     }
 
-    // Fungsi untuk memperbarui gambar dari kamera
     fun setBitmap(bitmap: Bitmap?) {
         _selectedBitmap.value = bitmap
     }
 
-    // Fungsi untuk menangani navigasi jika diperlukan
     fun navigateToRecommend() {
-        // Logika untuk navigasi jika diperlukan
     }
 }
