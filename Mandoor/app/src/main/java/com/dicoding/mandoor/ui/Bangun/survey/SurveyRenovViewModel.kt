@@ -14,6 +14,15 @@ class SurveyRenovViewModel : ViewModel() {
     private val _selectedBitmap = MutableLiveData<Bitmap?>()
     val selectedBitmap: LiveData<Bitmap?> get() = _selectedBitmap
 
+    private val _rating = MutableLiveData<Int?>()
+    val rating: LiveData<Int?> get() = _rating
+
+    private val _pengalaman = MutableLiveData<Int?>()
+    val pengalaman: LiveData<Int?> get() = _pengalaman
+
+    private val _portofolio = MutableLiveData<Int?>()
+    val portofolio: LiveData<Int?> get() = _portofolio
+
     fun setImageUri(uri: Uri?) {
         _selectedImageUri.value = uri
     }
@@ -22,6 +31,19 @@ class SurveyRenovViewModel : ViewModel() {
         _selectedBitmap.value = bitmap
     }
 
-    fun navigateToRecommend() {
+    fun setSurveyData(rating: Int, pengalaman: Int, portofolio: Int) {
+        _rating.value = rating
+        _pengalaman.value = pengalaman
+        _portofolio.value = portofolio
+    }
+
+    fun saveSurveyData(): Boolean {
+        return try {
+            // Simpan data ke server atau database lokal
+            // Gunakan _rating, _pengalaman, dan _portofolio jika diperlukan
+            true
+        } catch (e: Exception) {
+            false
+        }
     }
 }

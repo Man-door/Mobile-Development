@@ -6,10 +6,6 @@
     android:layout_height="match_parent"
     android:background="#64D9DD">
 
-    <!-- Logo -->
-
-    <!-- Title -->
-
     <ImageView
         android:id="@+id/logo"
         android:layout_width="100dp"
@@ -34,7 +30,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="20dp" />
 
-    <!-- Full Name Input -->
     <EditText
         android:id="@+id/full_name"
         android:layout_width="0dp"
@@ -122,66 +117,33 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/password" />
 
-    <!-- Google Signup -->
-    <LinearLayout
-        android:id="@+id/google_signup"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="20dp"
-        android:layout_marginTop="16dp"
-        android:background="@drawable/google_button_background"
-        android:gravity="center"
-        android:orientation="horizontal"
-        android:padding="10dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/register_button">
-
-        <ImageView
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_marginEnd="10dp"
-            android:src="@drawable/google" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Sign up with Google"
-            android:textColor="#FFA000"
-            android:textSize="16sp"
-            android:textStyle="bold" />
-    </LinearLayout>
-
-
-    <!-- Login Link -->
-
     <TextView
         android:id="@+id/login_bottom_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="36dp"
+        android:layout_marginTop="8dp"
         android:text="Sudah punya akun?"
         android:textColor="#FFFFFF"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/google_signup" />
+        app:layout_constraintTop_toBottomOf="@+id/register_button" />
 
     <TextView
         android:id="@+id/login_link"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="36dp"
         android:layout_marginEnd="100dp"
         android:text="@string/login"
         android:textColor="#DEAB4D"
         android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/login_bottom_text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@id/login_bottom_text"
-        app:layout_constraintTop_toBottomOf="@id/google_signup" />
+        app:layout_constraintTop_toTopOf="@+id/login_bottom_text" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -32,7 +32,7 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
         _loading.value = true
 
         val request = LogUserRequest(email, password)
-        ApiConfig.instance.loginUser(request).enqueue(object : Callback<LogUserResponse> {
+        ApiConfig.mainInstance.loginUser(request).enqueue(object : Callback<LogUserResponse> {
             override fun onResponse(call: Call<LogUserResponse>, response: Response<LogUserResponse>) {
                 _loading.value = false
                 if (response.isSuccessful) {

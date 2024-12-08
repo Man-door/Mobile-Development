@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.text.InputType
+import android.util.Log
 import android.view.MotionEvent
 import android.widget.Toast
 import androidx.activity.viewModels
@@ -28,10 +29,6 @@ class RegisterActivity : AppCompatActivity() {
         val loadingAdapter = LoadingAdapter(this)
 
         val userType = intent.getStringExtra("USER_TYPE")
-
-        val intent = Intent(this, LoginActivity::class.java)
-        intent.putExtra("USER_TYPE", "user")
-        startActivity(intent)
 
         binding.loginLink.setOnClickListener {
             val intent = Intent(this@RegisterActivity, LoginActivity::class.java)
@@ -70,6 +67,7 @@ class RegisterActivity : AppCompatActivity() {
             val username = binding.username.text.toString().trim()
             val email = binding.email.text.toString().trim()
             val password = binding.password.text.toString().trim()
+            Log.d("RegisterActivity", "Register clicked with: $fullName, $username, $email, $password")
 
             if (userType == "user") {
                 registerViewModel.registerUser(fullName, username, email, password)

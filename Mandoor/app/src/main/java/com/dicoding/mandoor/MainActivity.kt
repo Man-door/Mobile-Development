@@ -35,13 +35,17 @@ class MainActivity : AppCompatActivity() {
             val navView: BottomNavigationView = binding.navView
 
             val navController = findNavController(R.id.nav_host_fragment_activity_main)
+
+            // Konfigurasi AppBar tanpa ActionBar
             val appBarConfiguration = AppBarConfiguration(
                 setOf(
                     R.id.navigation_home, R.id.navigation_bangun, R.id.navigation_notifications
                 )
             )
-            setupActionBarWithNavController(navController, appBarConfiguration)
+
+            // Setup navigasi BottomNavigationView tanpa setupActionBarWithNavController
             navView.setupWithNavController(navController)
         }
     }
 }
+

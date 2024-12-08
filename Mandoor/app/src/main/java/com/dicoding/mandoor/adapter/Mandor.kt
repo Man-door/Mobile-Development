@@ -1,10 +1,14 @@
-package com.dicoding.mandoor.adapter
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 data class Mandor(
-    val imageRes: Int,
-    val name: String,
-    val rating: String,
-    val totalProyek: String,
-    val jangkauan: String,
-    val deskripsi: String
+    val img: String?,
+    val fullName: String?,
+    val ratingUser: Int?,
+    val numberProyek: Int?,
+    val jangkauan: String?,
+    val layananLain: String?
 )
+ : Parcelable
+

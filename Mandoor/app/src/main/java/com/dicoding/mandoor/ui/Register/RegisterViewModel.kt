@@ -1,6 +1,7 @@
 package com.dicoding.mandoor.ui.Register
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -23,19 +24,22 @@ class RegisterViewModel(application: Application) : AndroidViewModel(application
     val loading: LiveData<Boolean> get() = _loading
 
     fun registerUser(fullName: String, username: String, email: String, password: String) {
+        Log.d(
+            "RegisterViewModel",
+            "registerUser called with: $fullName, $username, $email, $password"
+        )
+
         if (fullName.isEmpty() || username.isEmpty() || email.isEmpty() || password.isEmpty()) {
             _errorMessage.value = "Please fill all fields"
+            Log.e("RegisterViewModel", "Empty fields detected")
             return
         }
 
         _loading.value = true
         val request = RegUserRequest(fullName, username, email, password)
 
-        ApiConfig.instance.registerUser(request).enqueue(object : Callback<RegUserResponse> {
-            override fun onResponse(
-                call: Call<RegUserResponse>,
-                response: Response<RegUserResponse>
-            ) {
+        ApiConfig.mainInstance.registerUser(request).enqueue(object : Callback<RegUserResponse> {
+            override fun onResponse(call: Call<RegUserResponse>, response: Response<RegUserResponse>) {
                 _loading.value = false
                 if (response.isSuccessful) {
                     _registerSuccess.value = true

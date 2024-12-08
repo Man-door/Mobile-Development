@@ -22,7 +22,7 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
 
     fun fetchNews() {
         viewModelScope.launch(Dispatchers.IO) {
-            ApiConfig.instance.getNews().enqueue(object : Callback<NewsResponse> {
+            ApiConfig.mainInstance.getNews().enqueue(object : Callback<NewsResponse> {
                 override fun onResponse(call: Call<NewsResponse>, response: Response<NewsResponse>) {
                     if (response.isSuccessful) {
                         val articles = response.body()?.articles?.filterNotNull() ?: emptyList()

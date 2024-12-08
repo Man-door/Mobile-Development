@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Tema tanpa ActionBar, agar Toolbar bisa digunakan -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Sesuaikan dengan warna aplikasi Anda -->
+        <item name="colorPrimary">@color/light_gray</item>
+
+    </style>
+</resources>
