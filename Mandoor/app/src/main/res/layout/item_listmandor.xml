@@ -27,24 +27,24 @@
 
         <TextView
             android:id="@+id/namamandor"
-            android:layout_width="wrap_content"
+            android:layout_width="160dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
+            android:layout_marginTop="16dp"
             android:ellipsize="end"
             android:maxLines="1"
             android:text="@string/mandorname"
             android:textColor="#000000"
-            android:textSize="24sp"
+            android:textSize="14sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.035"
+            app:layout_constraintHorizontal_bias="0.191"
             app:layout_constraintStart_toEndOf="@id/itemImagelist"
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
             android:id="@+id/rateimagelist"
-            android:layout_width="33dp"
-            android:layout_height="28dp"
+            android:layout_width="14dp"
+            android:layout_height="14dp"
             android:layout_marginStart="8dp"
             android:src="@drawable/star"
             app:layout_constraintBottom_toBottomOf="@+id/namamandor"
@@ -53,11 +53,11 @@
 
         <TextView
             android:id="@+id/numratelist"
-            android:layout_width="36dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/rating"
             android:textColor="@color/black"
-            android:textSize="18sp"
+            android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="@+id/rateimagelist"
             app:layout_constraintStart_toEndOf="@+id/rateimagelist"
             app:layout_constraintTop_toTopOf="@+id/rateimagelist" />
@@ -71,6 +71,7 @@
             android:textColor="@color/black"
             android:textSize="12sp"
             app:layout_constraintEnd_toEndOf="@+id/namamandor"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@+id/namamandor"
             app:layout_constraintTop_toBottomOf="@+id/namamandor" />
 
@@ -103,7 +104,7 @@
 
         <TextView
             android:id="@+id/deskripmandorlist"
-            android:layout_width="287dp"
+            android:layout_width="280dp"
             android:layout_height="40dp"
             android:layout_marginTop="4dp"
             android:ellipsize="end"

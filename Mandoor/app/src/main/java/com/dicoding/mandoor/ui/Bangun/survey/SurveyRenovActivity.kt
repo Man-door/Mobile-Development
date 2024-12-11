@@ -3,15 +3,22 @@ package com.dicoding.mandoor.ui.Bangun.survey
 import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.app.DatePickerDialog
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
+import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.view.MenuItem
+import android.widget.ArrayAdapter
 import android.widget.Button
+import android.widget.EditText
+import android.widget.ImageView
 import android.widget.RadioButton
 import android.widget.RadioGroup
+import android.widget.Spinner
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -21,6 +28,8 @@ import androidx.lifecycle.Observer
 import com.dicoding.mandoor.R
 import com.dicoding.mandoor.adapter.LoadingAdapter
 import com.dicoding.mandoor.ui.Bangun.recommend.RecommendActivity
+import java.io.ByteArrayOutputStream
+import java.util.Calendar
 
 class SurveyRenovActivity : AppCompatActivity() {
 
@@ -28,8 +37,27 @@ class SurveyRenovActivity : AppCompatActivity() {
     private val REQUEST_CODE_CAMERA = 1002
     private val CAMERA_PERMISSION_CODE = 1003
 
-    private val surveyRenovViewModel: SurveyRenovViewModel by viewModels()
+    private val surveyRenovViewModel: SurveyBangunViewModel by viewModels()
     private lateinit var loadingAdapter: LoadingAdapter
+    private lateinit var tanggalBangunEditText: EditText
+    private lateinit var layananSpinner: Spinner
+
+    private val layananOptions = listOf(
+        "Pilih Layanan", "Atap Pemasangan", "Renovasi Rumah", "Bangunan Kontraktor",
+        "Jendela Kusen Pintu", "Partisi Pembatas Ruangan", "Kabinet", "Instalasi Kanopi",
+        "Pengecatan", "Teralis", "Bengkel Las", "Service Sofa", "Plafon", "Jasa Pertukangan",
+        "(Borongan) Jasa Pertukangan", "Taman Tukang", "Jendela Pemasangan Pintu", "Pagar Pemasangan",
+        "Pagar Perbaikan", "Pengeboran Sumur", "Waterproofing", "Pemasangan Wallpaper", "Railing",
+        "Lantai Pemasangan", "Designer Interior", "Partisi", "Beton Injeksi", "Atap Perbaikan",
+        "Lantai Perbaikan", "Kayu Tukang", "Epoxy Lantai", "Lampu Pemasangan", "AC Pemasangan",
+        "Kelistrikan", "Borongan Ledeng Tukang", "Ledeng Tukang", "Cuci Mesin Service", "Kulkas Service",
+        "Service TV", "AC Service", "AC Perusahaan Service", "Ikan Kolam", "Kolam Renang", "Arsitek",
+        "Kontraktor Pameran", "Gazebo", "(Harian) Jasa Pertukangan", "Pemasangan TV", "Lampu Service",
+        "Harian Jasa Tukang", "Air Pompa Service", "Alarm CCTV", "Air Pemanas Service", "Control Pest",
+        "Gorden", "Sedot WC", "Ahli Kunci", "Rental Sound System", "Booth Photo Rental",
+        "Cleaning Service", "Gas Kompor Service", "Pindahan", "Catering Event", "Event Organizer",
+        "Cuci Karpet", "Cuci Sofa"
+    )
 
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,48 +66,37 @@ class SurveyRenovActivity : AppCompatActivity() {
 
         loadingAdapter = LoadingAdapter(this)
 
+        val ivSurveyBangun = findViewById<ImageView>(R.id.iv_survey_renov)
+
         val toolbar = findViewById<androidx.appcompat.widget.Toolbar>(R.id.toolbarrenov)
         setSupportActionBar(toolbar)
-
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setHomeButtonEnabled(true)
 
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.CAMERA), CAMERA_PERMISSION_CODE)
+        layananSpinner = findViewById(R.id.spinner_layanan_renov)
+        tanggalBangunEditText = findViewById(R.id.ed_tanggal_renov)
+
+        val adapter = ArrayAdapter(
+            this,
+            android.R.layout.simple_spinner_item,
+            layananOptions
+        )
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        layananSpinner.adapter = adapter
+
+        tanggalBangunEditText.setOnClickListener {
+            showDatePickerDialog()
         }
 
         val simpanButton = findViewById<Button>(R.id.btnsimpanrenov)
         simpanButton.setOnClickListener {
-            loadingAdapter.showLoading()
-
-            val rating = getSelectedValue(findViewById(R.id.rg_rating_renov))
-            val pengalaman = getSelectedValue(findViewById(R.id.rg_pengalaman_renov))
-            val portofolio = getSelectedValue(findViewById(R.id.rg_portofolio_renov))
-
-            if (rating == null || pengalaman == null || portofolio == null) {
-                Toast.makeText(this, "Harap isi semua pilihan!", Toast.LENGTH_SHORT).show()
-                loadingAdapter.dismissLoading()
-                return@setOnClickListener
-            }
-
-            surveyRenovViewModel.setSurveyData(rating, pengalaman, portofolio)
-
-            val isSaved = surveyRenovViewModel.saveSurveyData()
-
-            if (isSaved) {
-                Toast.makeText(this, "Survey berhasil disimpan", Toast.LENGTH_SHORT).show()
-
-                val intent = Intent(this, RecommendActivity::class.java)
-                startActivity(intent)
-            } else {
-                Toast.makeText(this, "Survey gagal disimpan", Toast.LENGTH_SHORT).show()
-            }
-
-            loadingAdapter.dismissLoading()
+            saveSurvey()
         }
 
         val galleryButton = findViewById<Button>(R.id.btn_gallery_renov)
-        galleryButton.setOnClickListener { openGallery() }
+        galleryButton.setOnClickListener {
+            openGallery()
+        }
 
         val cameraButton = findViewById<Button>(R.id.btn_camera_renov)
         cameraButton.setOnClickListener {
@@ -90,25 +107,97 @@ class SurveyRenovActivity : AppCompatActivity() {
             }
         }
 
-        surveyRenovViewModel.selectedImageUri.observe(this, Observer { uri ->
-            if (uri != null) {
+        surveyRenovViewModel.loading.observe(this, Observer { isLoading ->
+            if (isLoading) {
+                loadingAdapter.showLoading()
+            } else {
+                loadingAdapter.dismissLoading()
             }
         })
 
-        surveyRenovViewModel.selectedBitmap.observe(this, Observer { bitmap ->
-            if (bitmap != null) {
+        surveyRenovViewModel._successMessage.observe(this, Observer { message ->
+            if (!message.isNullOrEmpty()) {
+                Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+            }
+        })
+
+        surveyRenovViewModel._errorMessage.observe(this, Observer { message ->
+            if (!message.isNullOrEmpty()) {
+                Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
             }
         })
     }
 
-    private fun getSelectedValue(radioGroup: RadioGroup): Int? {
-        val selectedId = radioGroup.checkedRadioButtonId
-        return if (selectedId != -1) {
-            findViewById<RadioButton>(selectedId).text.toString().toIntOrNull()
-        } else {
-            null
+    private fun showDatePickerDialog() {
+        val calendar = Calendar.getInstance()
+        val year = calendar.get(Calendar.YEAR)
+        val month = calendar.get(Calendar.MONTH)
+        val day = calendar.get(Calendar.DAY_OF_MONTH)
+
+        DatePickerDialog(this, { _, selectedYear, selectedMonth, selectedDay ->
+            val formattedDate = String.format("%04d-%02d-%02d", selectedYear, selectedMonth + 1, selectedDay)
+            tanggalBangunEditText.setText(formattedDate)
+        }, year, month, day).show()
+    }
+
+    private fun saveSurvey() {
+        val sharedPreferences = getSharedPreferences("UserSession", Context.MODE_PRIVATE)
+        val token = sharedPreferences.getString("user_token", null)
+
+        if (token.isNullOrEmpty()) {
+            Toast.makeText(this, "Token tidak ditemukan. Melanjutkan tanpa token.", Toast.LENGTH_SHORT).show()
+            return
         }
+
+        val ratingGroup = findViewById<RadioGroup>(R.id.rg_rating_renov)
+        val pengalamanGroup = findViewById<RadioGroup>(R.id.rg_pengalaman_renov)
+        val portofolioGroup = findViewById<RadioGroup>(R.id.rg_portofolio_renov)
+        val rangeHargaEditText = findViewById<EditText>(R.id.ed_rangerenov)
+        val deskripsiEditText = findViewById<EditText>(R.id.ed_descrenov)
+        val alamatPengerjaanEditText = findViewById<EditText>(R.id.ed_alamat_pengerjaan_renov)
+
+        val selectedRating = ratingGroup.checkedRadioButtonId.let { id ->
+            findViewById<RadioButton>(id)?.text?.toString()?.toIntOrNull() ?: 0
+        }
+        val selectedPengalaman = pengalamanGroup.checkedRadioButtonId.let { id ->
+            findViewById<RadioButton>(id)?.text?.toString()?.toIntOrNull() ?: 0
+        }
+        val selectedPortofolio = portofolioGroup.checkedRadioButtonId.let { id ->
+            findViewById<RadioButton>(id)?.text?.toString()?.toIntOrNull() ?: 0
+        }
+        val selectedLayanan = layananSpinner.selectedItem.toString()
+        val selectedDate = tanggalBangunEditText.text.toString()
+        val selectedImageUri = surveyRenovViewModel.selectedImageUri.value
+        val rangeHarga = rangeHargaEditText.text.toString()
+        val deskripsi = deskripsiEditText.text.toString()
+        val alamatPengerjaan = alamatPengerjaanEditText.text.toString()
+
+        if (selectedImageUri == null) {
+            Toast.makeText(this, "Harap pilih gambar!", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        surveyRenovViewModel.saveSurveyData(
+            token,
+            selectedRating,
+            selectedPengalaman,
+            selectedPortofolio,
+            selectedLayanan,
+            rangeHarga,
+            deskripsi,
+            alamatPengerjaan,
+            selectedDate,
+            selectedImageUri,
+            onSuccess = {
+                val intent = Intent(this, RecommendActivity::class.java)
+                startActivity(intent)
+            },
+            onError = { errorMessage ->
+                Toast.makeText(this, errorMessage, Toast.LENGTH_SHORT).show()
+            }
+        )
     }
+
 
     private fun openGallery() {
         val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
@@ -125,31 +214,41 @@ class SurveyRenovActivity : AppCompatActivity() {
         }
     }
 
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (requestCode == CAMERA_PERMISSION_CODE) {
-            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                openCamera()
-            } else {
-                Toast.makeText(this, "Camera permission is required to use this feature", Toast.LENGTH_SHORT).show()
-            }
-        }
-    }
-
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK) {
+            val ivSurveyBangun = findViewById<ImageView>(R.id.iv_survey_renov)
             when (requestCode) {
                 REQUEST_CODE_GALLERY -> {
                     val selectedImageUri = data?.data
-                    surveyRenovViewModel.setImageUri(selectedImageUri)
+                    if (selectedImageUri != null) {
+                        surveyRenovViewModel.setImageUri(selectedImageUri)
+                        ivSurveyBangun.setImageURI(selectedImageUri)
+                    } else {
+                        Toast.makeText(this, "Gagal memuat gambar dari galeri", Toast.LENGTH_SHORT).show()
+                    }
                 }
                 REQUEST_CODE_CAMERA -> {
                     val photo = data?.extras?.get("data") as? Bitmap
-                    surveyRenovViewModel.setBitmap(photo)
+                    if (photo != null) {
+                        val photoUri = getImageUri(this, photo)
+                        surveyRenovViewModel.setImageUri(photoUri)
+                        ivSurveyBangun.setImageBitmap(photo)
+                    } else {
+                        Toast.makeText(this, "Gagal mengambil gambar dari kamera", Toast.LENGTH_SHORT).show()
+                    }
                 }
             }
+        } else {
+            Toast.makeText(this, "Tidak ada gambar yang dipilih", Toast.LENGTH_SHORT).show()
         }
+    }
+
+    private fun getImageUri(context: Context, inImage: Bitmap?): Uri {
+        val bytes = ByteArrayOutputStream()
+        inImage?.compress(Bitmap.CompressFormat.JPEG, 100, bytes)
+        val path = MediaStore.Images.Media.insertImage(context.contentResolver, inImage, "title", null)
+        return Uri.parse(path)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

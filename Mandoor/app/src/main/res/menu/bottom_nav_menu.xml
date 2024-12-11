@@ -8,12 +8,12 @@
 
     <item
         android:id="@+id/navigation_bangun"
-        android:icon="@drawable/logo_mandoor"
+        android:icon="@drawable/engineer"
         android:title="@string/bangun" />
 
     <item
-        android:id="@+id/navigation_notifications"
-        android:icon="@drawable/ic_notifications_black_24dp"
-        android:title="@string/title_notifications" />
+        android:id="@+id/navigation_account"
+        android:icon="@drawable/account_circle"
+        android:title="@string/title_account" />
 
 </menu>

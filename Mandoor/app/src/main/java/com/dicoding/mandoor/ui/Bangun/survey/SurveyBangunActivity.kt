@@ -10,16 +10,8 @@ import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
-import android.util.Log
 import android.view.MenuItem
-import android.widget.ArrayAdapter
-import android.widget.Button
-import android.widget.EditText
-import android.widget.ImageView
-import android.widget.RadioButton
-import android.widget.RadioGroup
-import android.widget.Spinner
-import android.widget.Toast
+import android.widget.*
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
@@ -40,78 +32,24 @@ class SurveyBangunActivity : AppCompatActivity() {
     private val surveyBangunViewModel: SurveyBangunViewModel by viewModels()
     private lateinit var loadingAdapter: LoadingAdapter
     private lateinit var tanggalBangunEditText: EditText
+    private lateinit var layananSpinner: Spinner
 
     private val layananOptions = listOf(
-        "Pilih Layanan",
-        "Atap Pemasangan",
-        "Renovasi Rumah",
-        "Bangunan Kontraktor",
-        "Jendela Kusen Pintu",
-        "Partisi Pembatas Ruangan",
-        "Kabinet",
-        "Instalasi Kanopi",
-        "Pengecatan",
-        "Teralis",
-        "Bengkel Las",
-        "Service Sofa",
-        "Plafon",
-        "Jasa Pertukangan",
-        "(Borongan) Jasa Pertukangan",
-        "Taman Tukang",
-        "Jendela Pemasangan Pintu",
-        "Pagar Pemasangan",
-        "Pagar Perbaikan",
-        "Pengeboran Sumur",
-        "Waterproofing",
-        "Pemasangan Wallpaper",
-        "Railing",
-        "Lantai Pemasangan",
-        "Designer Interior",
-        "Partisi",
-        "Beton Injeksi",
-        "Atap Perbaikan",
-        "Lantai Perbaikan",
-        "Kayu Tukang",
-        "Epoxy Lantai",
-        "Lampu Pemasangan",
-        "AC Pemasangan",
-        "Kelistrikan",
-        "Borongan Ledeng Tukang",
-        "Ledeng Tukang",
-        "Cuci Mesin Service",
-        "Kulkas Service",
-        "Service TV",
-        "AC Service",
-        "AC Perusahaan Service",
-        "Ikan Kolam",
-        "Kolam Renang",
-        "Arsitek",
-        "Kontraktor Pameran",
-        "Gazebo",
-        "(Harian) Jasa Pertukangan",
-        "Pemasangan TV",
-        "Lampu Service",
-        "Harian Jasa Tukang",
-        "Air Pompa Service",
-        "Alarm CCTV",
-        "Air Pemanas Service",
-        "Control Pest",
-        "Gorden",
-        "Sedot WC",
-        "Ahli Kunci",
-        "Rental Sound System",
-        "Booth Photo Rental",
-        "Cleaning Service",
-        "Gas Kompor Service",
-        "Pindahan",
-        "Catering Event",
-        "Event Organizer",
-        "Cuci Karpet",
-        "Cuci Sofa"
+        "Pilih Layanan", "Atap Pemasangan", "Renovasi Rumah", "Bangunan Kontraktor",
+        "Jendela Kusen Pintu", "Partisi Pembatas Ruangan", "Kabinet", "Instalasi Kanopi",
+        "Pengecatan", "Teralis", "Bengkel Las", "Service Sofa", "Plafon", "Jasa Pertukangan",
+        "(Borongan) Jasa Pertukangan", "Taman Tukang", "Jendela Pemasangan Pintu", "Pagar Pemasangan",
+        "Pagar Perbaikan", "Pengeboran Sumur", "Waterproofing", "Pemasangan Wallpaper", "Railing",
+        "Lantai Pemasangan", "Designer Interior", "Partisi", "Beton Injeksi", "Atap Perbaikan",
+        "Lantai Perbaikan", "Kayu Tukang", "Epoxy Lantai", "Lampu Pemasangan", "AC Pemasangan",
+        "Kelistrikan", "Borongan Ledeng Tukang", "Ledeng Tukang", "Cuci Mesin Service", "Kulkas Service",
+        "Service TV", "AC Service", "AC Perusahaan Service", "Ikan Kolam", "Kolam Renang", "Arsitek",
+        "Kontraktor Pameran", "Gazebo", "(Harian) Jasa Pertukangan", "Pemasangan TV", "Lampu Service",
+        "Harian Jasa Tukang", "Air Pompa Service", "Alarm CCTV", "Air Pemanas Service", "Control Pest",
+        "Gorden", "Sedot WC", "Ahli Kunci", "Rental Sound System", "Booth Photo Rental",
+        "Cleaning Service", "Gas Kompor Service", "Pindahan", "Catering Event", "Event Organizer",
+        "Cuci Karpet", "Cuci Sofa"
     )
-
-
-    private lateinit var layananSpinner: Spinner
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -123,16 +61,11 @@ class SurveyBangunActivity : AppCompatActivity() {
 
         val toolbar = findViewById<androidx.appcompat.widget.Toolbar>(R.id.toolbarsurveybangun)
         setSupportActionBar(toolbar)
-
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setHomeButtonEnabled(true)
 
         layananSpinner = findViewById(R.id.spinner_layanan)
-
         tanggalBangunEditText = findViewById(R.id.ed_tanggal_bangun)
-        tanggalBangunEditText.setOnClickListener {
-            showDatePickerDialog()
-        }
 
         val adapter = ArrayAdapter(
             this,
@@ -141,6 +74,10 @@ class SurveyBangunActivity : AppCompatActivity() {
         )
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         layananSpinner.adapter = adapter
+
+        tanggalBangunEditText.setOnClickListener {
+            showDatePickerDialog()
+        }
 
         val simpanButton = findViewById<Button>(R.id.btnsimpanbangun)
         simpanButton.setOnClickListener {
@@ -161,13 +98,23 @@ class SurveyBangunActivity : AppCompatActivity() {
             }
         }
 
-        surveyBangunViewModel.selectedImageUri.observe(this, Observer { uri ->
-            if (uri != null) {
+        surveyBangunViewModel.loading.observe(this, Observer { isLoading ->
+            if (isLoading) {
+                loadingAdapter.showLoading()
+            } else {
+                loadingAdapter.dismissLoading()
             }
         })
 
-        surveyBangunViewModel.selectedBitmap.observe(this, Observer { bitmap ->
-            if (bitmap != null) {
+        surveyBangunViewModel._successMessage.observe(this, Observer { message ->
+            if (!message.isNullOrEmpty()) {
+                Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+            }
+        })
+
+        surveyBangunViewModel._errorMessage.observe(this, Observer { message ->
+            if (!message.isNullOrEmpty()) {
+                Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
             }
         })
     }
@@ -179,24 +126,19 @@ class SurveyBangunActivity : AppCompatActivity() {
         val day = calendar.get(Calendar.DAY_OF_MONTH)
 
         DatePickerDialog(this, { _, selectedYear, selectedMonth, selectedDay ->
-            val formattedDate = String.format("%02d-%02d-%04d", selectedDay, selectedMonth + 1, selectedYear)
+            val formattedDate = String.format("%04d-%02d-%02d", selectedYear, selectedMonth + 1, selectedDay)
             tanggalBangunEditText.setText(formattedDate)
         }, year, month, day).show()
     }
 
     private fun saveSurvey() {
-        loadingAdapter.showLoading()
-
-        val sharedPreferences = getSharedPreferences("app_preferences", Context.MODE_PRIVATE)
-        val token = sharedPreferences.getString("jwt_token", null)
+        val sharedPreferences = getSharedPreferences("UserSession", Context.MODE_PRIVATE)
+        val token = sharedPreferences.getString("user_token", null)
 
         if (token.isNullOrEmpty()) {
-            Toast.makeText(this, "Token tidak ditemukan. Harap login kembali.", Toast.LENGTH_SHORT).show()
-            finish()
-        } else {
-            Log.d("TokenDebug", "Token ditemukan: $token")
+            Toast.makeText(this, "Token tidak ditemukan. Melanjutkan tanpa token.", Toast.LENGTH_SHORT).show()
+            return
         }
-
 
         val ratingGroup = findViewById<RadioGroup>(R.id.rg_rating_bangun)
         val pengalamanGroup = findViewById<RadioGroup>(R.id.rg_pengalaman_bangun)
@@ -208,109 +150,47 @@ class SurveyBangunActivity : AppCompatActivity() {
         val selectedRating = ratingGroup.checkedRadioButtonId.let { id ->
             findViewById<RadioButton>(id)?.text?.toString()?.toIntOrNull() ?: 0
         }
-
-        if (selectedRating == 0) {
-            Toast.makeText(this, "Harap pilih rating!", Toast.LENGTH_SHORT).show()
-            loadingAdapter.dismissLoading()
-            return
-        }
-
         val selectedPengalaman = pengalamanGroup.checkedRadioButtonId.let { id ->
             findViewById<RadioButton>(id)?.text?.toString()?.toIntOrNull() ?: 0
         }
-
-        if (selectedPengalaman == 0) {
-            Toast.makeText(this, "Harap pilih pengalaman!", Toast.LENGTH_SHORT).show()
-            loadingAdapter.dismissLoading()
-            return
-        }
-
         val selectedPortofolio = portofolioGroup.checkedRadioButtonId.let { id ->
             findViewById<RadioButton>(id)?.text?.toString()?.toIntOrNull() ?: 0
         }
-
-        if (selectedPortofolio == 0) {
-            Toast.makeText(this, "Harap pilih portofolio!", Toast.LENGTH_SHORT).show()
-            loadingAdapter.dismissLoading()
-            return
-        }
-
         val selectedLayanan = layananSpinner.selectedItem.toString()
-        if (selectedLayanan == "Pilih Layanan") {
-            Toast.makeText(this, "Harap pilih layanan!", Toast.LENGTH_SHORT).show()
-            loadingAdapter.dismissLoading()
-            return
-        }
-
         val selectedDate = tanggalBangunEditText.text.toString()
-        if (selectedDate.isEmpty()) {
-            Toast.makeText(this, "Harap pilih tanggal!", Toast.LENGTH_SHORT).show()
-            loadingAdapter.dismissLoading()
-            return
-        }
-
         val selectedImageUri = surveyBangunViewModel.selectedImageUri.value
+        val rangeHarga = rangeHargaEditText.text.toString()
+        val deskripsi = deskripsiEditText.text.toString()
+        val alamatPengerjaan = alamatPengerjaanEditText.text.toString()
+
         if (selectedImageUri == null) {
             Toast.makeText(this, "Harap pilih gambar!", Toast.LENGTH_SHORT).show()
-            loadingAdapter.dismissLoading()
             return
         }
 
-        val rangeHarga = rangeHargaEditText.text.toString()
-        if (rangeHarga.isEmpty()) {
-            Toast.makeText(this, "Harap isi range harga!", Toast.LENGTH_SHORT).show()
-            loadingAdapter.dismissLoading()
-            return
-        }
-
-        val deskripsi = deskripsiEditText.text.toString()
-        if (deskripsi.isEmpty()) {
-            Toast.makeText(this, "Harap isi deskripsi!", Toast.LENGTH_SHORT).show()
-            loadingAdapter.dismissLoading()
-            return
-        }
-
-        val alamatPengerjaan = alamatPengerjaanEditText.text.toString()
-        if (alamatPengerjaan.isEmpty()) {
-            Toast.makeText(this, "Harap isi alamat pengerjaan!", Toast.LENGTH_SHORT).show()
-            loadingAdapter.dismissLoading()
-            return
-        }
-
-        if (selectedRating == 0 || selectedPengalaman == 0 || selectedPortofolio == 0 ||
-            selectedLayanan == "Pilih Layanan" || selectedDate.isEmpty() || rangeHarga.isEmpty() ||
-            deskripsi.isEmpty() || alamatPengerjaan.isEmpty() || selectedImageUri == null
-        ) {
-            Toast.makeText(this, "Harap lengkapi semua data!", Toast.LENGTH_SHORT).show()
-            loadingAdapter.dismissLoading()
-            return
-        }
-
-        // Panggil ViewModel untuk mengirim data
-        if (token != null) {
-            surveyBangunViewModel.saveSurveyData(
-                token = token,
-                rating = selectedRating,
-                pengalaman = selectedPengalaman,
-                portofolio = selectedPortofolio,
-                selectedLayanan = selectedLayanan,
-                selectedDate = selectedDate,
-                selectedImageUri = selectedImageUri,
-                rangeHarga = rangeHarga,
-                deskripsi = deskripsi,
-                alamatPengerjaan = alamatPengerjaan
-            )
-        }
-        surveyBangunViewModel.successMessage.observe(this) { message ->
-            loadingAdapter.dismissLoading()
-            Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
-            startActivity(Intent(this, RecommendActivity::class.java))
-        }
-        surveyBangunViewModel.errorMessage.observe(this) { message ->
-            loadingAdapter.dismissLoading()
-            Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
-        }
+        surveyBangunViewModel.saveSurveyData(
+            token,
+            selectedRating,
+            selectedPengalaman,
+            selectedPortofolio,
+            selectedLayanan,
+            rangeHarga,
+            deskripsi,
+            alamatPengerjaan,
+            selectedDate,
+            selectedImageUri,
+            onSuccess = {
+                // Pindah ke RecommendActivity setelah berhasil
+                val intent = Intent(this, RecommendActivity::class.java)
+                startActivity(intent)
+            },
+            onError = { errorMessage ->
+                // Tampilkan pesan error
+                Toast.makeText(this, errorMessage, Toast.LENGTH_SHORT).show()
+            }
+        )
     }
+
 
     private fun openGallery() {
         val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
@@ -357,14 +237,12 @@ class SurveyBangunActivity : AppCompatActivity() {
         }
     }
 
-
     private fun getImageUri(context: Context, inImage: Bitmap?): Uri {
         val bytes = ByteArrayOutputStream()
         inImage?.compress(Bitmap.CompressFormat.JPEG, 100, bytes)
         val path = MediaStore.Images.Media.insertImage(context.contentResolver, inImage, "title", null)
         return Uri.parse(path)
     }
-
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {

@@ -2,7 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="200dp"
     android:layout_margin="15dp"
 
     xmlns:tools="http://schemas.android.com/tools">
@@ -32,37 +32,31 @@
             android:layout_width="356dp"
             android:layout_height="match_parent">
 
-            <androidx.cardview.widget.CardView
-
-                android:id="@+id/cardView3"
-                android:layout_width="73dp"
-                android:layout_height="100dp"
-                android:layout_margin="16dp"
-                app:cardCornerRadius="8dp"
-                app:cardElevation="20dp"
+            <ImageView
+                android:id="@+id/ivcust"
+                android:layout_width="80dp"
+                android:layout_height="110dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="12dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/pak_vinsen"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent">
-
-                <ImageView
-                    android:id="@+id/ivcust"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/pak_vinsen" />
-            </androidx.cardview.widget.CardView>
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/lineView" />
 
             <TextView
                 android:id="@+id/tvcust"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="4dp"
-                android:layout_marginBottom="92dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
                 android:text="@string/mandorname"
                 android:textColor="@color/black"
                 android:textSize="16sp"
                 android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/cardView3" />
+                app:layout_constraintStart_toEndOf="@+id/ivcust"
+                app:layout_constraintTop_toBottomOf="@+id/lineView" />
 
             <TextView
                 android:id="@+id/tvbangun"
@@ -73,9 +67,8 @@
                 android:textColor="@color/black"
                 android:textSize="12sp"
                 android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.032"
-                app:layout_constraintStart_toEndOf="@+id/cardView3"
+                app:layout_constraintEnd_toEndOf="@+id/tvcust"
+                app:layout_constraintStart_toStartOf="@+id/tvcust"
                 app:layout_constraintTop_toBottomOf="@+id/tvcust" />
 
             <TextView
@@ -87,9 +80,9 @@
                 android:textColor="@color/black"
                 android:textSize="12sp"
                 android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/tvbangun"
                 app:layout_constraintHorizontal_bias="0.027"
-                app:layout_constraintStart_toEndOf="@+id/cardView3"
+                app:layout_constraintStart_toStartOf="@+id/tvbangun"
                 app:layout_constraintTop_toBottomOf="@+id/tvbangun" />
 
             <Button
@@ -104,7 +97,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.104"
-                app:layout_constraintStart_toEndOf="@+id/cardView3"
+                app:layout_constraintStart_toEndOf="@+id/ivcust"
                 app:layout_constraintTop_toBottomOf="@+id/tvharga"
                 app:layout_constraintVertical_bias="1.0"
                 tools:ignore="TouchTargetSizeCheck" />
@@ -159,7 +152,7 @@
                 android:layout_height="33dp"
                 android:background="@drawable/pending"
                 android:gravity="center"
-                android:text="Ongoing"
+                android:text="@string/ongoing"
                 android:textColor="@android:color/white"
                 android:textSize="10sp"
                 android:textStyle="bold"

@@ -30,7 +30,7 @@ class BookingAdapter(private var bookingList: List<Booking>) : RecyclerView.Adap
 
     fun updateData(newBookingList: List<Booking>) {
         bookingList = newBookingList
-        notifyDataSetChanged() // Notify the adapter that the data has changed
+        notifyDataSetChanged()
     }
 }
 

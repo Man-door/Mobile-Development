@@ -1,4 +1,4 @@
-package com.dicoding.mandoor.ui.notifications
+package com.dicoding.mandoor.ui.account
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

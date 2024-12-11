@@ -1,7 +1,6 @@
 package com.dicoding.mandoor.ui.Register
 
 import android.app.Application
-import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -14,43 +13,31 @@ import retrofit2.Response
 
 class RegisterViewModel(application: Application) : AndroidViewModel(application) {
 
-    private val _registerSuccess = MutableLiveData<Boolean>()
-    val registerSuccess: LiveData<Boolean> get() = _registerSuccess
-
-    private val _errorMessage = MutableLiveData<String>()
-    val errorMessage: LiveData<String> get() = _errorMessage
-
     private val _loading = MutableLiveData<Boolean>()
     val loading: LiveData<Boolean> get() = _loading
 
+    private val _registrationResult = MutableLiveData<RegUserResponse>()
+    val registrationResult: LiveData<RegUserResponse> get() = _registrationResult
+
     fun registerUser(fullName: String, username: String, email: String, password: String) {
-        Log.d(
-            "RegisterViewModel",
-            "registerUser called with: $fullName, $username, $email, $password"
-        )
-
-        if (fullName.isEmpty() || username.isEmpty() || email.isEmpty() || password.isEmpty()) {
-            _errorMessage.value = "Please fill all fields"
-            Log.e("RegisterViewModel", "Empty fields detected")
-            return
-        }
-
         _loading.value = true
-        val request = RegUserRequest(fullName, username, email, password)
+        val apiService = ApiConfig.mainInstance
 
-        ApiConfig.mainInstance.registerUser(request).enqueue(object : Callback<RegUserResponse> {
+        val registerRequest = RegUserRequest(fullName, username, email, password)
+
+        apiService.registerUser(registerRequest).enqueue(object : Callback<RegUserResponse> {
             override fun onResponse(call: Call<RegUserResponse>, response: Response<RegUserResponse>) {
                 _loading.value = false
                 if (response.isSuccessful) {
-                    _registerSuccess.value = true
+                    _registrationResult.value = response.body()
                 } else {
-                    _errorMessage.value = "Registration Failed: ${response.message()}"
+                    _registrationResult.value = null
                 }
             }
 
             override fun onFailure(call: Call<RegUserResponse>, t: Throwable) {
                 _loading.value = false
-                _errorMessage.value = "Network Error: ${t.message}"
+                _registrationResult.value = null
             }
         })
     }

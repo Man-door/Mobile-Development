@@ -25,7 +25,7 @@
             android:id="@+id/cvbangun"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="32dp"
             app:cardCornerRadius="8dp"
             app:cardElevation="4dp"
             android:layout_marginBottom="16dp">
@@ -67,7 +67,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="64dp"
             app:cardCornerRadius="8dp"
             app:cardElevation="4dp">
 

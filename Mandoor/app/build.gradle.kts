@@ -56,8 +56,10 @@ dependencies {
     implementation (libs.squareup.retrofit)
     implementation (libs.converter.gson)
     implementation (libs.gson)
+    implementation (libs.glide.v4151)
     implementation (libs.logging.interceptor)
-    implementation (libs.glide)
+
+    implementation (libs.androidx.recyclerview)
 
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

@@ -10,14 +10,19 @@ import com.dicoding.mandoor.response.NewsResponse
 import com.dicoding.mandoor.response.RegUserResponse
 import com.dicoding.mandoor.response.SurveyGETResponse
 import com.dicoding.mandoor.response.SurveyPOSTResponse
+import com.dicoding.mandoor.response.User
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.Headers
+import retrofit2.http.Multipart
 import retrofit2.http.POST
 import retrofit2.http.PUT
+import retrofit2.http.Part
 
 data class RegUserRequest(
     val FullName: String,
@@ -32,9 +37,9 @@ data class LogUserRequest(
 )
 
 data class SurveyRequest(
-    val Rating: String,
-    val Pengalaman: String,
-    val Portofolio: String,
+    val Rating: Int,
+    val Pengalaman: Int,
+    val Portofolio: Int,
     val Alamat: String,
     val layanan_lain: String,
     val Tanggal: String,
@@ -55,11 +60,19 @@ interface ApiService {
     @GET("/news")
     fun getNews(): Call<NewsResponse>
 
-    @Headers("Content-Type: application/json")
+    @Multipart
     @POST("/survey")
     fun sendSurvey(
         @Header("Authorization") token: String,
-        @Body request: SurveyRequest
+        @Part("Rating") Rating: RequestBody,
+        @Part("Pengalaman") Pengalaman: RequestBody,
+        @Part("Portofolio") Portofolio: RequestBody,
+        @Part("layanan_lain") layanan_Lain: RequestBody,
+        @Part("Budget") Budget: RequestBody,
+        @Part("Deskripsi") Deskripsi: RequestBody,
+        @Part("Alamat") Alamat: RequestBody,
+        @Part("Tanggal") Tanggal: RequestBody,
+        @Part image: MultipartBody.Part
     ): Call<SurveyPOSTResponse>
 
 
@@ -70,25 +83,20 @@ interface ApiService {
     @GET("/filtermandor")
     fun getMandor(@Header("Authorization") token: String): Call<List<MandorResponseItem>>
 
-
-
-    @GET("/data")
+    @GET("/register")
     fun getAccount(
-        @Header("Authorization") token: String,
-        @Body request: AccountGETResponse
+        @Header("Authorization") token: String
     ): Call<AccountGETResponse>
 
-    @PUT("/data")
-    fun updateAccount(
-        @Header("Authorization") token: String,
-        @Body request: AccountPUTResponse
-    ): Call<AccountGETResponse>
 
-    @DELETE("/data")
+    @PUT("/register")
+    fun updateAccount(@Header("Authorization") token: String, @Body userRequest: User): Call<AccountPUTResponse>
+
+    @DELETE("/register")
     fun deleteAccount(
-        @Header("Authorization") token: String,
-        @Body request: AccountDeleteResponse
+        @Header("Authorization") token: String
     ): Call<AccountGETResponse>
+
 
 }
 

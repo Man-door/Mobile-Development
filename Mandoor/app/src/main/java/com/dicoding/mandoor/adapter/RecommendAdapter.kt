@@ -14,7 +14,6 @@ class RecommendAdapter(
 
     class MandorViewHolder(private val binding: ItemRecommendBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(mandor: Mandor, onMandorClick: (Mandor) -> Unit) {
-            // Gunakan Glide untuk memuat gambar dari URL
             Glide.with(binding.mandorImage.context)
                 .load(mandor.img)
                 .into(binding.mandorImage)

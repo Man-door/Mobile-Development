@@ -4,31 +4,34 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.text.InputType
-import android.util.Log
 import android.view.MotionEvent
 import android.widget.Toast
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Observer
 import com.dicoding.mandoor.R
 import com.dicoding.mandoor.adapter.LoadingAdapter
+import com.dicoding.mandoor.api.ApiConfig
+import com.dicoding.mandoor.api.RegUserRequest
 import com.dicoding.mandoor.databinding.ActivityRegisterBinding
+import com.dicoding.mandoor.response.RegUserResponse
 import com.dicoding.mandoor.ui.Login.LoginActivity
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class RegisterActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityRegisterBinding
-    private val registerViewModel: RegisterViewModel by viewModels()
+    private lateinit var loadingAdapter: LoadingAdapter
+    private lateinit var registerViewModel: RegisterViewModel
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         binding = ActivityRegisterBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val loadingAdapter = LoadingAdapter(this)
-
-        val userType = intent.getStringExtra("USER_TYPE")
+        loadingAdapter = LoadingAdapter(this)
 
         binding.loginLink.setOnClickListener {
             val intent = Intent(this@RegisterActivity, LoginActivity::class.java)
@@ -62,43 +65,46 @@ class RegisterActivity : AppCompatActivity() {
             }
         }
 
+
         binding.registerButton.setOnClickListener {
             val fullName = binding.fullName.text.toString().trim()
             val username = binding.username.text.toString().trim()
             val email = binding.email.text.toString().trim()
             val password = binding.password.text.toString().trim()
-            Log.d("RegisterActivity", "Register clicked with: $fullName, $username, $email, $password")
 
-            if (userType == "user") {
-                registerViewModel.registerUser(fullName, username, email, password)
+            if (fullName.isNotEmpty() && username.isNotEmpty() && email.isNotEmpty() && password.isNotEmpty()) {
+                registerUser(fullName, username, email, password)
             } else {
+                Toast.makeText(this, "Harap isi semua kolom", Toast.LENGTH_SHORT).show()
             }
         }
+    }
 
-        registerViewModel.loading.observe(this, Observer { isLoading ->
-            if (isLoading) {
-                loadingAdapter.showLoading()
-            } else {
+    private fun registerUser(fullName: String, username: String, email: String, password: String) {
+        loadingAdapter.showLoading()
+
+        val request = RegUserRequest(fullName, username, email, password)
+        val apiService = ApiConfig.mainInstance
+        apiService.registerUser(request).enqueue(object : Callback<RegUserResponse> {
+            override fun onResponse(call: Call<RegUserResponse>, response: Response<RegUserResponse>) {
                 loadingAdapter.dismissLoading()
-            }
-        })
+                if (response.isSuccessful) {
+                    Toast.makeText(this@RegisterActivity, "Registrasi berhasil!", Toast.LENGTH_SHORT).show()
 
-        registerViewModel.registerSuccess.observe(this, Observer { success ->
-            if (success) {
-                Toast.makeText(this, "Registration Successful", Toast.LENGTH_SHORT).show()
-                val intent = Intent(this@RegisterActivity, LoginActivity::class.java)
-                startActivity(intent)
-                finish()
-            }
-        })
+                    val intent = Intent(this@RegisterActivity, LoginActivity::class.java)
+                    startActivity(intent)
 
-        registerViewModel.errorMessage.observe(this, Observer { errorMessage ->
-            if (errorMessage.isNotEmpty()) {
-                Toast.makeText(this, errorMessage, Toast.LENGTH_SHORT).show()
+                    finish()
+                } else {
+                    Toast.makeText(this@RegisterActivity, "Registrasi gagal. Coba lagi.", Toast.LENGTH_SHORT).show()
+                }
+            }
+
+            override fun onFailure(call: Call<RegUserResponse>, t: Throwable) {
+                loadingAdapter.dismissLoading()
+                Toast.makeText(this@RegisterActivity, "Terjadi kesalahan: ${t.message}", Toast.LENGTH_SHORT).show()
             }
         })
     }
 }
-
-
 

@@ -102,7 +102,6 @@
         android:focusableInTouchMode="true"
         android:clickable="true"/>
 
-    <!-- Register Button -->
     <Button
         android:id="@+id/register_button"
         android:layout_width="0dp"

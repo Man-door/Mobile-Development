@@ -2,7 +2,7 @@
     <string name="app_name">Mandoor</string>
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="title_account">Account</string>
     <string name="hello_welcome">Hello, Welcome!</string>
     <string name="fullname">Full name</string>
     <string name="username">Username</string>
@@ -37,7 +37,7 @@
     <string name="hintrange">Pilih range harga</string>
     <string name="range">Range Harga</string>
     <string name="deskripsi">Deskripsi</string>
-    <string name="alamat_pengerjaan">Alamat Pengerjaan</string>
+    <string name="jangkauan_mandor">Jangkauan</string>
     <string name="tanggal">Tanggal</string>
     <string name="hintdesc">Disini anda menjelaskan tujuan projek anda agar dapat dipahamai</string>
     <string name="hinttanggal">Masukkan tanggal untuk projek anda</string>
@@ -45,9 +45,9 @@
     <string name="Gallery">Galeri</string>
     <string name="camera">Kamera</string>
     <string name="mandorname">Ir.Asep</string>
-    <string name="rating">4.5</string>
+    <string name="rating">4</string>
     <string name="recommendmandor">Rekomendasi Mandor</string>
-    <string name="customer_description">Deskripsi: Renovasi rumah baru, membutuhkan mandor yang berpengalaman.</string>
+    <string name="customer_description">Renovasi rumah baru, membutuhkan mandor yang berpengalaman.</string>
     <string name="total_proyek">Total Proyek:</string>
     <string name="jangkauan">Tangerang Selatan, Tangerang Kota</string>
     <string name="descmandor">Kami menerima Jasa Kontraktor Bangunan,Jasa Pertukangan,Perbaikan Lantai,Pemasangan Lantai dan Pemasangan Atap</string>
@@ -66,7 +66,7 @@
     <string name="news_title">News Title</string>
     <string name="news_description">News Description</string>
     <string name="profil_mandor">Profil Mandor</string>
-    <string name="pending">Pending</string>
+    <string name="diterima">Diterima</string>
     <string name="booking_list">Booking List</string>
     <string name="loading">loading</string>
     <string name="pembayaran">Pembayaran</string>
@@ -74,4 +74,38 @@
     <string name="hintpengalamanrenov">pilih skala pengalaman mandor untuk kebutuhan anda</string>
     <string name="portofolio">Portofolio</string>
     <string name="hintportofoliorenov">Pilih skala portofolio mandor untuk kebutuhan anda</string>
+    <string name="ubah_nama">Ubah Nama</string>
+    <string name="nohp">No Handphone</string>
+    <string name="alamat">Alamat</string>
+    <string name="tomsus">Tom Sus</string>
+    <string name="custusername">Tom Sus</string>
+    <string name="ubah_username">Ubah Username</string>
+    <string name="ubah_email">Ubah Email</string>
+    <string name="ubah_nohp">Ubah No Handphone</string>
+    <string name="e_mail">tom.suseno@gmail.com</string>
+    <string name="no_hp">08115006969</string>
+    <string name="hellowelcomeback">Hello, Welcome back!</string>
+    <string name="ubah">Ubah</string>
+    <string name="rate_rec">Rating:</string>
+    <string name="pengalaman_rec">Skala Pengalaman:</string>
+    <string name="scale_pengalaman">5</string>
+    <string name="portofolio_rec">Skala Portofolio:</string>
+    <string name="layanan_rec">Layanan:</string>
+    <string name="portofolio_scale">4</string>
+    <string name="layanan_recommend">Pengecatan</string>
+    <string name="rangeharga_rec">Range Harga:</string>
+    <string name="rangeharga_recommend">Rp.200.000</string>
+    <string name="deskripsirec">Deskripsi:</string>
+    <string name="alamat_rec">Alamat Pengerjaan:</string>
+    <string name="alamat_recommend">UIN Sunan Kalijaga, Jl. Laksda Adisucipto, Papringan, Caturtunggal, Kec. Depok, Kabupaten Sleman, Daerah Istimewa Yogyakarta \n\n(Gedung FST)\n\nDEPOK, KAB SLEMAN, DI YOGYAKARTA, ID 55281  </string>
+    <string name="tanggal_rec">Tanggal:</string>
+    <string name="tanggal_recommend">2024 - 12 - 12</string>
+    <string name="foto">Foto:</string>
+    <string name="nohp_value">08115006969</string>
+    <string name="hint_jangkauan">Masukkan jangkauan tempat projek anda (contoh: Jakarta, Depok, Bekasi, Pasuruan)</string>
+    <string name="logout">Logout</string>
+    <string name="hapusakun">Hapus Akun</string>
+    <string name="book">Book</string>
+    <string name="ongoing">Ongoing</string>
+    <string name="lanjutpembayaran">Lanjut Pembayaran</string>
 </resources>

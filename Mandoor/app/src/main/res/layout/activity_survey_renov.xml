@@ -198,7 +198,7 @@
 
 
         <TextView
-            android:id="@+id/jenisrenov"
+            android:id="@+id/layananrenov"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
@@ -211,22 +211,20 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/rg_portofolio_renov" />
 
-        <EditText
-        android:id="@+id/ed_jenisrenov"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="32dp"
-        android:background="@drawable/rounded_edittext"
-        android:hint="@string/hintlayanan"
-        android:padding="16dp"
-        android:textColor="#000000"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/jenisrenov" />
+        <Spinner
+            android:id="@+id/spinner_layanan_renov"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="32dp"
+            android:background="@drawable/rounded_edittext"
+            android:padding="16dp"
+            android:textSize="16sp"
+            android:spinnerMode="dropdown"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/layananrenov" />
 
     <TextView
         android:id="@+id/rangerenov"
@@ -240,7 +238,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.117"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ed_jenisrenov" />
+        app:layout_constraintTop_toBottomOf="@+id/spinner_layanan_renov" />
 
     <EditText
         android:id="@+id/ed_rangerenov"
@@ -290,21 +288,21 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/descrenov" />
 
-    <TextView
-        android:id="@+id/alamat_pengerjaan_renov"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="@string/alamat_pengerjaan"
-        android:textColor="#000000"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.156"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ed_descrenov" />
+        <TextView
+            android:id="@+id/alamat_pengerjaan_renov"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="@string/jangkauan_mandor"
+            android:textColor="#000000"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.109"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ed_descrenov" />
 
-    <EditText
+        <EditText
         android:id="@+id/ed_alamat_pengerjaan_renov"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -312,7 +310,7 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="32dp"
         android:background="@drawable/rounded_edittext"
-        android:hint="@string/hintrange"
+        android:hint="@string/hint_jangkauan"
         android:padding="16dp"
         android:textColor="#000000"
         android:textSize="16sp"
@@ -366,10 +364,10 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/ed_tanggal_renov" />
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/lin_foto_renov"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="354dp"
+            android:layout_height="307dp"
             android:layout_marginStart="32dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="32dp"
@@ -383,39 +381,44 @@
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/foto_renov"
-            app:layout_constraintVertical_bias="0.0">
+            app:layout_constraintVertical_bias="0.196">
 
             <Button
                 android:id="@+id/btn_gallery_renov"
                 android:layout_width="150dp"
                 android:layout_height="58dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginBottom="16dp"
                 android:backgroundTint="@color/gray"
                 android:drawableLeft="@drawable/image"
                 android:text="@string/Gallery"
                 android:textColor="@color/black"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/password" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <Button
                 android:id="@+id/btn_camera_renov"
                 android:layout_width="150dp"
                 android:layout_height="58dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginBottom="16dp"
                 android:backgroundTint="@color/gray"
                 android:drawableLeft="@drawable/camera"
                 android:text="@string/camera"
                 android:textColor="@color/black"
                 android:textStyle="bold"
+                app:layout_constraintEnd_toStartOf="@+id/btn_gallery_renov"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/iv_survey_renov"
+                android:layout_width="200dp"
+                android:layout_height="182dp"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/password" />
-        </LinearLayout>
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.87" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <Button
             android:id="@+id/btnsimpanrenov"
