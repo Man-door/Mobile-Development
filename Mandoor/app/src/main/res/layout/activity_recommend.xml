@@ -81,7 +81,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/descriptionSection"
             android:layout_width="0dp"
-            android:layout_height="680dp"
+            android:layout_height="500dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="40dp"
             android:layout_marginEnd="8dp"
@@ -209,12 +209,12 @@
 
             <ImageView
                 android:id="@+id/foto_rec"
-                android:layout_width="wrap_content"
+                android:layout_width="320dp"
                 android:layout_height="wrap_content"
                 android:padding="64dp"
-                android:src="@drawable/image"
+                android:src="@drawable/renovasidinding"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.14"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toEndOf="@+id/foto"
                 app:layout_constraintTop_toTopOf="@+id/foto" />
 

@@ -40,7 +40,7 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="12dp"
                 android:scaleType="centerCrop"
-                android:src="@drawable/pak_vinsen"
+                android:src="@drawable/image_mandor"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/lineView" />

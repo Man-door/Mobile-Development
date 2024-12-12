@@ -189,7 +189,13 @@ class SurveyRenovActivity : AppCompatActivity() {
             selectedDate,
             selectedImageUri,
             onSuccess = {
-                val intent = Intent(this, RecommendActivity::class.java)
+                val intent = Intent(this, RecommendActivity::class.java).apply {
+                    putExtra("deskripsi", deskripsi)
+                    putExtra("rangeHarga", rangeHarga)
+                    putExtra("alamatPengerjaan", alamatPengerjaan)
+                    putExtra("tanggal", selectedDate)
+                    putExtra("imageUri", selectedImageUri.toString())
+                }
                 startActivity(intent)
             },
             onError = { errorMessage ->

@@ -5,12 +5,8 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.dicoding.mandoor.R
 import com.dicoding.mandoor.adapter.ListMandorAdapter
 import com.dicoding.mandoor.api.ApiConfig
 import com.dicoding.mandoor.databinding.ActivityListMandorBinding
@@ -58,7 +54,7 @@ class ListMandorActivity : AppCompatActivity() {
                         Mandor(
                             img = item.img,
                             fullName = item.fullName,
-                            ratingUser = item.ratingUser,
+                            ratingUser = item.rating,
                             numberProyek = item.numberProyek,
                             jangkauan = item.jangkauan,
                             layananLain = item.layananLain

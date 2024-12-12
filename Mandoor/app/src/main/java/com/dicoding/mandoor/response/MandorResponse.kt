@@ -13,13 +13,13 @@ data class MandorResponseItem(
 	val img: String?,
 	@SerializedName("FullName")
 	val fullName: String?,
-	@SerializedName("rating_user")
-	val ratingUser: Int?,
 	@SerializedName("total_proyek")
 	val numberProyek: Int?,
 	@SerializedName("jangkauan")
 	val jangkauan: String?,
 	@SerializedName("layanan_lain")
-	val layananLain: String?
+	val layananLain: String?,
+	@SerializedName("rating")
+	val rating: Int?
 )
 

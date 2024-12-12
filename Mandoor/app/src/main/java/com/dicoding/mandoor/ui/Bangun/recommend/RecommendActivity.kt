@@ -2,6 +2,7 @@ package com.dicoding.mandoor.ui.Bangun.recommend
 
 import Mandor
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
@@ -37,6 +38,27 @@ class RecommendActivity : AppCompatActivity() {
         setSupportActionBar(binding.toolbarrecommend)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
+        val deskripsi = intent.getStringExtra("deskripsi") ?: "N/A"
+        val rangeHarga = intent.getStringExtra("rangeHarga") ?: "N/A"
+        val alamatPengerjaan = intent.getStringExtra("alamatPengerjaan") ?: "N/A"
+        val tanggal = intent.getStringExtra("tanggal") ?: "N/A"
+        val imageUri = intent.getStringExtra("imageUri")
+
+        // Set data ke UI
+        binding.tvRangehargaRec.text = rangeHarga
+        binding.customerDescription.text = deskripsi
+        binding.alamatRec.text = alamatPengerjaan
+        binding.tanggalRec.text = tanggal
+
+        // Load gambar menggunakan Glide
+        if (!imageUri.isNullOrEmpty()) {
+            Glide.with(this)
+                .load(Uri.parse(imageUri))
+                .placeholder(R.drawable.renovasidinding)
+                .error(R.drawable.renovasidinding)
+                .into(binding.fotoRec)
+        }
+
         binding.seeAll.setOnClickListener {
             val intent = Intent(this, ListMandorActivity::class.java)
             startActivity(intent)
@@ -55,11 +77,7 @@ class RecommendActivity : AppCompatActivity() {
             return
         }
 
-        Log.d("RecommendActivity", "Token ditemukan: $token")
-
-        // Fetch both mandor data and survey data
         getMandorData("Bearer $token")
-        getSurveyData("Bearer $token")
     }
 
     private fun getMandorData(token: String) {
@@ -71,7 +89,7 @@ class RecommendActivity : AppCompatActivity() {
                         Mandor(
                             img = item.img,
                             fullName = item.fullName,
-                            ratingUser = item.ratingUser,
+                            ratingUser = item.rating,
                             numberProyek = item.numberProyek,
                             jangkauan = item.jangkauan,
                             layananLain = item.layananLain
@@ -95,61 +113,14 @@ class RecommendActivity : AppCompatActivity() {
         })
     }
 
-    private fun getSurveyData(token: String) {
-        val apiService = ApiConfig.mainInstance
-        apiService.getSurvey(token).enqueue(object : Callback<SurveyGETResponse> {
-            override fun onResponse(call: Call<SurveyGETResponse>, response: Response<SurveyGETResponse>) {
-                if (response.isSuccessful) {
-                    val surveyItems = response.body()?.surveyGETResponse?.filterNotNull()
-                    if (!surveyItems.isNullOrEmpty()) {
-                        val firstSurvey = surveyItems[0] // Mengambil item pertama
-                        displaySurveyData(firstSurvey)
-                    } else {
-                        Toast.makeText(this@RecommendActivity, "No survey data found.", Toast.LENGTH_SHORT).show()
-                    }
-                } else {
-                    Log.e("SurveyError", "Error Code: ${response.code()}")
-                    Log.e("SurveyError", "Error Body: ${response.errorBody()?.string()}")
-                    Log.e("RecommendActivity", "Failed to load surveys: ${response.code()}, ${response.errorBody()?.string()}")
-                    Toast.makeText(this@RecommendActivity, "Failed to load surveys: ${response.message()}", Toast.LENGTH_SHORT).show()
-                }
-            }
-
-            override fun onFailure(call: Call<SurveyGETResponse>, t: Throwable) {
-                Log.e("RecommendActivity", "Error fetching surveys: ${t.message}")
-                Toast.makeText(this@RecommendActivity, "Error fetching surveys: ${t.message}", Toast.LENGTH_SHORT).show()
-            }
-        })
-    }
-
-
-    private fun displaySurveyData(survey: SurveyGETResponseItem) {
-        val tvRangeHargaRec = findViewById<TextView>(R.id.tv_rangeharga_rec)
-        val tvCustomerDescription = findViewById<TextView>(R.id.customerDescription)
-        val tvAlamatRec = findViewById<TextView>(R.id.alamat_rec)
-        val tvTanggalRec = findViewById<TextView>(R.id.tanggal_rec)
-        val ivFotoRec = findViewById<ImageView>(R.id.foto_rec)
-
-        tvRangeHargaRec.text = survey.budget ?: "N/A"
-        tvCustomerDescription.text = survey.deskripsi ?: "N/A"
-        tvAlamatRec.text = survey.alamat ?: "N/A"
-        tvTanggalRec.text = survey.tanggal ?: "N/A"
-
-        // Load image using Glide (atau library lainnya)
-        Glide.with(this)
-            .load(survey.foto) // URL gambar
-            .placeholder(R.drawable.image) // Gambar placeholder
-            .error(R.drawable.image) // Gambar jika URL gagal
-            .into(ivFotoRec)
-    }
-
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             android.R.id.home -> {
-                onBackPressed()
+                finish()
                 true
             }
             else -> super.onOptionsItemSelected(item)
         }
     }
 }
+

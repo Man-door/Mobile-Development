@@ -8,7 +8,7 @@
 
     <item
         android:id="@+id/navigation_bangun"
-        android:icon="@drawable/engineer"
+        android:icon="@drawable/mandor"
         android:title="@string/bangun" />
 
     <item

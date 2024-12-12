@@ -39,7 +39,7 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
 
     fun fetchBookings() {
         val sampleBookings = listOf(
-            Booking(R.drawable.pak_vinsen, "Asep", "Renovasi", "Rp. 200,000", "Ongoing")
+            Booking(R.drawable.image_mandor, "Asep", "Renovasi", "Rp. 200,000", "Ongoing")
         )
         bookingList.postValue(sampleBookings)
     }

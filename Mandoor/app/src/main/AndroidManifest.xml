@@ -24,6 +24,9 @@
         android:theme="@style/Theme.Mandoor"
         tools:targetApi="31">
         <activity
+            android:name=".ui.onboarding.OnBoardingActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.account.nohp.NomorHpActivity"
             android:exported="false" />
         <activity
@@ -60,7 +63,7 @@
             android:exported="false"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
-            android:name=".ui.onboarding.OnBoardingActivity"
+            android:name=".splashscreen.SplashScreenActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -180,17 +180,20 @@ class SurveyBangunActivity : AppCompatActivity() {
             selectedDate,
             selectedImageUri,
             onSuccess = {
-                // Pindah ke RecommendActivity setelah berhasil
-                val intent = Intent(this, RecommendActivity::class.java)
+                val intent = Intent(this, RecommendActivity::class.java).apply {
+                    putExtra("deskripsi", deskripsi)
+                    putExtra("rangeHarga", rangeHarga)
+                    putExtra("alamatPengerjaan", alamatPengerjaan)
+                    putExtra("tanggal", selectedDate)
+                    putExtra("imageUri", selectedImageUri.toString())
+                }
                 startActivity(intent)
             },
             onError = { errorMessage ->
-                // Tampilkan pesan error
                 Toast.makeText(this, errorMessage, Toast.LENGTH_SHORT).show()
             }
         )
     }
-
 
     private fun openGallery() {
         val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)

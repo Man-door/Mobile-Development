@@ -57,23 +57,22 @@ class BookingListActivity : AppCompatActivity() {
                         Mandor(
                             img = item.img,
                             fullName = item.fullName,
-                            ratingUser = item.ratingUser,
+                            ratingUser = item.rating,
                             numberProyek = item.numberProyek,
                             jangkauan = item.jangkauan,
                             layananLain = item.layananLain
                         )
                     } ?: emptyList()
 
-                    // Filter data mandor berdasarkan selectedMandor
                     val filteredMandorList = mandorItems.filter {
                         it.fullName == selectedMandor?.fullName &&
                                 it.img == selectedMandor?.img
                     }.map {
                         Booking(
-                            customerImage = R.drawable.image, // Placeholder image
+                            customerImage = R.drawable.image,
                             customerName = it.fullName ?: "Unknown",
                             serviceType = it.layananLain ?: "Unknown",
-                            price = "Rp. 0", // Tambahkan harga jika ada
+                            price = "Rp. 0",
                             status = "Pending"
                         )
                     }
