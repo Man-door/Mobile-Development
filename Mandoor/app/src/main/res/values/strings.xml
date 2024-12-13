@@ -39,7 +39,7 @@
     <string name="deskripsi">Deskripsi</string>
     <string name="jangkauan_mandor">Jangkauan</string>
     <string name="tanggal">Tanggal</string>
-    <string name="hintdesc">Disini anda menjelaskan tujuan projek anda agar dapat dipahamai</string>
+    <string name="hintdesc">Disini anda menjelaskan tujuan projek anda agar dapat dipahami</string>
     <string name="hinttanggal">Masukkan tanggal untuk projek anda</string>
     <string name="masukkanfoto">Masukkan Foto</string>
     <string name="Gallery">Galeri</string>
@@ -108,4 +108,19 @@
     <string name="book">Book</string>
     <string name="ongoing">Ongoing</string>
     <string name="lanjutpembayaran">Lanjut Pembayaran</string>
+    <string name="pembayaranmu">Pembayaranmu:</string>
+    <string name="methodbayar">Pilih Metode Pembayaran:</string>
+    <string name="viaaccount">Transfer Virtual Account</string>
+    <string name="viacash">Dompet Digital</string>
+    <string name="payment_successful">Pembayaran Berhasil</string>
+    <string name="payment_success_message">Transaksi anda berhasil. Untuk detail lebih lanjut lihat rincian.</string>
+    <string name="payment_details">Rincian</string>
+    <string name="sertifikasi">Sertifikasi</string>
+    <string name="sertif">Keselamatan dan Kesehatan Kerja (K3).\nBadan Nasional Sertifikasi Profesi (BNSP).\nAhli Muda Konstruksi</string>
+    <string name="pengalaman_rincian">Proyek Bangunan Gedung Bertingkat\nPembangunan Rumah Tinggal Pribadi\nRenovasi Gedung Perkantoran</string>
+    <string name="nomor_telepon">Nomor Telepon:</string>
+    <string name="email_rincian">Email:</string>
+    <string name="email_mandor">asep.sukanto@gmail.com</string>
+    <string name="rahasia">*Informasi diatas bersifat RAHASIA*</string>
+    <string name="backhome">Kembali ke Home</string>
 </resources>

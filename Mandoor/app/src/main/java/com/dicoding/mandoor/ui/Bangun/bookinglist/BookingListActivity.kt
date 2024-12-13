@@ -3,15 +3,18 @@ package com.dicoding.mandoor.ui.Bangun.bookinglist
 import Mandor
 import android.content.Intent
 import android.os.Bundle
+import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
 import com.dicoding.mandoor.R
 import com.dicoding.mandoor.adapter.Booking
 import com.dicoding.mandoor.adapter.BookingListAdapter
 import com.dicoding.mandoor.api.ApiConfig
 import com.dicoding.mandoor.databinding.ActivityBookingListBinding
 import com.dicoding.mandoor.response.MandorResponseItem
+import com.dicoding.mandoor.ui.Bangun.pembayaran.PembayaranActivity
 import com.dicoding.mandoor.ui.Login.LoginActivity
 import retrofit2.Call
 import retrofit2.Callback
@@ -20,73 +23,46 @@ import retrofit2.Response
 class BookingListActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityBookingListBinding
-    private lateinit var adapter: BookingListAdapter
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityBookingListBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val selectedMandor: Mandor? = intent.getParcelableExtra("selectedMandor")
+        setSupportActionBar(binding.toolbarbookinglist)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        // Setup RecyclerView
-        adapter = BookingListAdapter(emptyList())
-        binding.rvbookinglist.layoutManager = LinearLayoutManager(this)
-        binding.rvbookinglist.adapter = adapter
 
-        val sharedPreferences = getSharedPreferences("UserSession", MODE_PRIVATE)
-        val token = sharedPreferences.getString("user_token", null)
+        val mandor = intent.getParcelableExtra<Mandor>("mandor")
 
-        if (token.isNullOrEmpty()) {
-            Toast.makeText(this, "Token not found. Please log in again.", Toast.LENGTH_SHORT).show()
-            val intent = Intent(this, LoginActivity::class.java)
-            startActivity(intent)
-            finish()
-            return
+        mandor?.let {
+            binding.namamandorbook.text = it.fullName
+            binding.numratebook.text = it.ratingUser?.toString() ?: "N/A"
+            binding.numberproyekbook.text = it.numberProyek?.toString() ?: "0"
+            binding.jangkauanmandorbook.text = it.jangkauan ?: "N/A"
+            binding.deskripmandor.text = it.layananLain ?: "N/A"
+
+            Glide.with(this)
+                .load(it.img)
+                .into(binding.itemImage)
         }
 
-        // Fetch mandor data and filter based on selectedMandor
-        getMandorData("Bearer $token", selectedMandor)
+        binding.btnpembayaran.setOnClickListener {
+            val intent = Intent(this, PembayaranActivity::class.java)
+            intent.putExtra("mandor", mandor) // Kirim data mandor ke halaman pembayaran
+            startActivity(intent)
+        }
     }
 
-    private fun getMandorData(token: String, selectedMandor: Mandor?) {
-        ApiConfig.mainInstance.getMandor(token).enqueue(object : Callback<List<MandorResponseItem>> {
-            override fun onResponse(call: Call<List<MandorResponseItem>>, response: Response<List<MandorResponseItem>>) {
-                if (response.isSuccessful) {
-                    val mandorItems = response.body()?.map { item ->
-                        Mandor(
-                            img = item.img,
-                            fullName = item.fullName,
-                            ratingUser = item.rating,
-                            numberProyek = item.numberProyek,
-                            jangkauan = item.jangkauan,
-                            layananLain = item.layananLain
-                        )
-                    } ?: emptyList()
-
-                    val filteredMandorList = mandorItems.filter {
-                        it.fullName == selectedMandor?.fullName &&
-                                it.img == selectedMandor?.img
-                    }.map {
-                        Booking(
-                            customerImage = R.drawable.image,
-                            customerName = it.fullName ?: "Unknown",
-                            serviceType = it.layananLain ?: "Unknown",
-                            price = "Rp. 0",
-                            status = "Pending"
-                        )
-                    }
-
-                    adapter.updateData(filteredMandorList)
-                } else {
-                    Toast.makeText(this@BookingListActivity, "Failed to load data: ${response.message()}", Toast.LENGTH_SHORT).show()
-                }
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            android.R.id.home -> {
+                onBackPressed()
+                true
             }
-
-            override fun onFailure(call: Call<List<MandorResponseItem>>, t: Throwable) {
-                Toast.makeText(this@BookingListActivity, "Error: ${t.message}", Toast.LENGTH_SHORT).show()
-            }
-        })
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 }
-

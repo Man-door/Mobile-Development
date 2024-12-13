@@ -19,18 +19,155 @@
         app:titleMarginStart="100dp"
         app:titleTextColor="@android:color/black" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvbookinglist"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_bookinglist"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="32dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_height="250dp"
+        android:layout_marginTop="44dp"
+        android:background="@drawable/rounded_edittext"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbarbookinglist"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toBottomOf="@+id/toolbarbookinglist">
+
+        <ImageView
+            android:id="@+id/itemImage"
+            android:layout_width="87dp"
+            android:layout_height="136dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/circle_background"
+            android:scaleType="centerCrop"
+            android:src="@drawable/image_mandor"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.183" />
+
+        <TextView
+            android:id="@+id/namamandorbook"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="36dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="@string/mandorname"
+            android:textColor="#000000"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.035"
+            app:layout_constraintStart_toEndOf="@id/itemImage"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/rateimagebook"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginStart="8dp"
+            android:src="@drawable/star"
+            app:layout_constraintBottom_toBottomOf="@+id/namamandorbook"
+            app:layout_constraintStart_toEndOf="@+id/namamandorbook"
+            app:layout_constraintTop_toTopOf="@+id/namamandorbook" />
+
+        <TextView
+            android:id="@+id/numratebook"
+            android:layout_width="36dp"
+            android:layout_height="wrap_content"
+            android:text="@string/rating"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="@+id/rateimagebook"
+            app:layout_constraintStart_toEndOf="@+id/rateimagebook"
+            app:layout_constraintTop_toTopOf="@+id/rateimagebook" />
+
+        <TextView
+            android:id="@+id/statusText"
+            android:layout_width="78dp"
+            android:layout_height="27dp"
+            android:layout_marginStart="92dp"
+            android:background="@drawable/completed"
+            android:gravity="center"
+            android:text="@string/diterima"
+            android:textColor="@android:color/white"
+            android:textSize="8sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/numratebook"
+            app:layout_constraintStart_toEndOf="@+id/numratebook"
+            app:layout_constraintTop_toTopOf="@+id/numratebook"
+            app:layout_constraintVertical_bias="0.625" />
+
+        <TextView
+            android:id="@+id/totproyekbook"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/total_proyek"
+            android:textColor="@color/black"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="@+id/namamandorbook"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/namamandorbook"
+            app:layout_constraintTop_toBottomOf="@+id/namamandorbook" />
+
+        <TextView
+            android:id="@+id/numberproyekbook"
+            android:layout_width="24dp"
+            android:layout_height="wrap_content"
+            android:text="@string/num_proyek"
+            android:textColor="@color/black"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="@+id/totproyekbook"
+            app:layout_constraintStart_toEndOf="@+id/totproyekbook"
+            app:layout_constraintTop_toTopOf="@+id/totproyekbook" />
+
+        <TextView
+            android:id="@+id/jangkauanmandorbook"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:ellipsize="end"
+            android:maxLines="3"
+            android:text="@string/jangkauan"
+            android:textColor="@color/black"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="@+id/totproyekbook"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/totproyekbook"
+            app:layout_constraintTop_toBottomOf="@+id/totproyekbook" />
+
+
+        <TextView
+            android:id="@+id/deskripmandor"
+            android:layout_width="230dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="16dp"
+            android:ellipsize="end"
+            android:maxLines="3"
+            android:text="@string/descmandor"
+            android:textColor="@color/black"
+            android:textSize="10sp"
+            app:layout_constraintEnd_toEndOf="@+id/jangkauanmandorbook"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/jangkauanmandorbook"
+            app:layout_constraintTop_toBottomOf="@+id/jangkauanmandorbook" />
+
+        <Button
+            android:id="@+id/btnpembayaran"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/blue"
+            android:text="@string/lanjutpembayaran"
+            android:textAlignment="center"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.55"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/deskripmandor"
+            app:layout_constraintVertical_bias="0.36" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

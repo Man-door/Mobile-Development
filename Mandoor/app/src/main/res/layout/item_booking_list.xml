@@ -22,7 +22,7 @@
             android:layout_marginBottom="32dp"
             android:background="@drawable/circle_background"
             android:scaleType="centerCrop"
-            android:src="@drawable/pak_vinsen"
+            android:src="@drawable/image_mandor"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -144,8 +144,10 @@
             android:textAlignment="center"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/deskripmandor" />
+            app:layout_constraintTop_toBottomOf="@+id/deskripmandor"
+            app:layout_constraintVertical_bias="1.0" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

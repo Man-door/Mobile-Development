@@ -1,9 +1,13 @@
 package com.dicoding.mandoor.adapter
 
+import android.content.Intent
+import android.net.Uri
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.dicoding.mandoor.databinding.ItemUserActivityBinding
+import com.dicoding.mandoor.ui.Bangun.rincian.RincianActivity
 
 class BookingAdapter(private var bookingList: List<Booking>) : RecyclerView.Adapter<BookingAdapter.BookingViewHolder>() {
 
@@ -23,6 +27,26 @@ class BookingAdapter(private var bookingList: List<Booking>) : RecyclerView.Adap
             tvbangun.text = booking.serviceType
             tvharga.text = booking.price
             statusText.text = booking.status
+
+            // Listener untuk tombol Chat
+            chatButton.setOnClickListener {
+                val context = holder.itemView.context
+                val phoneNumber = "628123456789" // Ganti dengan nomor WhatsApp tujuan
+                val intent = Intent(Intent.ACTION_VIEW)
+                intent.data = Uri.parse("https://wa.me/$phoneNumber")
+                try {
+                    context.startActivity(intent)
+                } catch (e: Exception) {
+                    Toast.makeText(context, "WhatsApp tidak terpasang.", Toast.LENGTH_SHORT).show()
+                }
+            }
+
+            rincianButton.setOnClickListener {
+                val context = holder.itemView.context
+                val intent = Intent(context, RincianActivity::class.java)
+                intent.putExtra("booking", booking)
+                context.startActivity(intent)
+            }
         }
     }
 
@@ -33,4 +57,3 @@ class BookingAdapter(private var bookingList: List<Booking>) : RecyclerView.Adap
         notifyDataSetChanged()
     }
 }
-
