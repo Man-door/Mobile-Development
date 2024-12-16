@@ -50,10 +50,10 @@ class SurveyBangunViewModel(application: Application) : AndroidViewModel(applica
         alamatPengerjaan: String,
         selectedDate: String,
         imagePath: Uri,
-        onSuccess: () -> Unit, // Callback sukses
-        onError: (String) -> Unit // Callback error
+        onSuccess: () -> Unit,
+        onError: (String) -> Unit
     ) {
-        _loading.postValue(true) // Tampilkan loading
+        _loading.postValue(true)
 
         val context = getApplication<Application>()
         val contentResolver = context.contentResolver

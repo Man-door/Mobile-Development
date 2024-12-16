@@ -1,6 +1,8 @@
 package com.dicoding.mandoor.ui.home
 
+import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,7 +24,8 @@ class HomeFragment : Fragment() {
     private lateinit var homeViewModel: HomeViewModel
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+    ): View? {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
@@ -35,7 +38,8 @@ class HomeFragment : Fragment() {
 
     private fun setupRecyclerViews() {
         newsAdapter = NewsAdapter(emptyList())
-        binding.newsRecyclerView.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+        binding.newsRecyclerView.layoutManager =
+            LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         binding.newsRecyclerView.adapter = newsAdapter
 
         bookingAdapter = BookingAdapter(emptyList())
@@ -45,6 +49,9 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        val sharedPreferences = activity?.getSharedPreferences("UserSession", Context.MODE_PRIVATE)
+        val token = sharedPreferences?.getString("user_token", null)
 
         homeViewModel.newsList.observe(viewLifecycleOwner, Observer { news ->
             if (!news.isNullOrEmpty()) {
@@ -60,12 +67,23 @@ class HomeFragment : Fragment() {
             }
         })
 
+        homeViewModel.accountData.observe(viewLifecycleOwner, Observer { account ->
+            if (account != null && !account.username.isNullOrEmpty()) {
+                binding.userGreeting.text = "Hello, ${account.username}!" // Set username
+            } else {
+                binding.userGreeting.text = "Hello, Guest!" // Default text
+            }
+        })
+
+        if (token != null) {
+            homeViewModel.fetchAccountData(token)
+        }
         homeViewModel.fetchNews()
         homeViewModel.fetchBookings()
-    }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
+        override fun onDestroyView() {
+            super.onDestroyView()
+            _binding = null
+        }
 }

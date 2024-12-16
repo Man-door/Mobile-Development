@@ -1,19 +1,12 @@
 package com.dicoding.mandoor.ui.Bangun.rincian
 
 import Mandor
-import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import com.bumptech.glide.Glide
-import com.dicoding.mandoor.MainActivity
-import com.dicoding.mandoor.R
 import com.dicoding.mandoor.adapter.Booking
 import com.dicoding.mandoor.databinding.ActivityRincianBinding
-import com.dicoding.mandoor.ui.home.HomeFragment
 
 class RincianActivity : AppCompatActivity() {
 

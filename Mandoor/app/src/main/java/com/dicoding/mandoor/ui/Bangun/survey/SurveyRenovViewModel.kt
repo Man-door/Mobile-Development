@@ -6,7 +6,6 @@ import android.net.Uri
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import com.dicoding.mandoor.api.ApiConfig
 import com.dicoding.mandoor.response.SurveyPOSTResponse
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -50,10 +49,10 @@ class SurveyRenovViewModel(application: Application) : AndroidViewModel(applicat
         alamatPengerjaan: String,
         selectedDate: String,
         imagePath: Uri,
-        onSuccess: () -> Unit, // Callback sukses
-        onError: (String) -> Unit // Callback error
+        onSuccess: () -> Unit,
+        onError: (String) -> Unit
     ) {
-        _loading.postValue(true) // Tampilkan loading
+        _loading.postValue(true)
 
         val context = getApplication<Application>()
         val contentResolver = context.contentResolver
@@ -98,9 +97,9 @@ class SurveyRenovViewModel(application: Application) : AndroidViewModel(applicat
             imageBody
         ).enqueue(object : Callback<SurveyPOSTResponse> {
             override fun onResponse(call: Call<SurveyPOSTResponse>, response: Response<SurveyPOSTResponse>) {
-                _loading.postValue(false) // Sembunyikan loading
+                _loading.postValue(false)
                 if (response.isSuccessful) {
-                    onSuccess() // Callback sukses
+                    onSuccess()
                 } else {
                     onError("Gagal menyimpan survey: ${response.message()}")
                 }

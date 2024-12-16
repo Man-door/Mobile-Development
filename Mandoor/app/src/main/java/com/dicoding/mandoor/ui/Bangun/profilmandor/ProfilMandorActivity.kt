@@ -38,7 +38,7 @@ class ProfilMandorActivity : AppCompatActivity() {
         // Listener untuk tombol "Book Now"
         binding.btnsimpanbooknow.setOnClickListener {
             val intent = Intent(this, BookingListActivity::class.java)
-            intent.putExtra("mandor", mandor) // Kirim data mandor
+            intent.putExtra("mandor", mandor)
             startActivity(intent)
         }
     }

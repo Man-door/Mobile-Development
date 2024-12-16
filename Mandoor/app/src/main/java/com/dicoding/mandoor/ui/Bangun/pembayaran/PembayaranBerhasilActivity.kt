@@ -19,7 +19,7 @@ class PembayaranBerhasilActivity : AppCompatActivity() {
         // Button untuk mengarah ke Activity Rincian
         binding.btnPaymentDetails.setOnClickListener {
             val intent = Intent(this, RincianActivity::class.java)
-            val mandor = intent.getParcelableExtra<Mandor>("mandor") // Jika data mandor ada
+            val mandor = intent.getParcelableExtra<Mandor>("mandor")
             intent.putExtra("mandor", mandor)
             startActivity(intent)
             finish()

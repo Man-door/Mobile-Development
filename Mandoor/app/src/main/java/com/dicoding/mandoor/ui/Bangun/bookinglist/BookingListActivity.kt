@@ -51,7 +51,7 @@ class BookingListActivity : AppCompatActivity() {
 
         binding.btnpembayaran.setOnClickListener {
             val intent = Intent(this, PembayaranActivity::class.java)
-            intent.putExtra("mandor", mandor) // Kirim data mandor ke halaman pembayaran
+            intent.putExtra("mandor", mandor)
             startActivity(intent)
         }
     }
